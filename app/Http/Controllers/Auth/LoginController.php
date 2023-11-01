@@ -64,10 +64,10 @@ class LoginController extends Controller
             'email'    => 'required|string',
             'password' => 'required|string',
         ]);
-        
+
         DB::beginTransaction();
         try {
-            
+
             $email     = $request->email;
             $password  = $request->password;
 
@@ -90,13 +90,15 @@ class LoginController extends Controller
                 Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
                 return redirect('login');
             }
-           
+
         } catch(\Exception $e) {
             DB::rollback();
             Toastr::error('fail, LOGIN :)','Error');
             return redirect()->back();
         }
     }
+
+
 
     /** logout */
     public function logout( Request $request)

@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>All Courses</h6>
+                                    <h6>All Subjeects</h6>
                                     <h3>04/06</h3>
                                 </div>
                                 <div class="db-icon">
@@ -55,7 +55,7 @@
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>Test Attended</h6>
+                                    <h6>Test Done</h6>
                                     <h3>30/50</h3>
                                 </div>
                                 <div class="db-icon">
@@ -65,13 +65,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-3 col-sm-6 col-12 d-flex">
                     <div class="card bg-comman w-100">
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>Test Passed</h6>
-                                    <h3>15/20</h3>
+                                    <h6>Fees payment</h6>
+                                    <h3>89%</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{URL::to('assets/img/icons/student-icon-02.svg')}}" alt="Dashboard Icon">

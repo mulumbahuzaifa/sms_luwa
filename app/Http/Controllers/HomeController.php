@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\SmClass;
+use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,7 +28,11 @@ class HomeController extends Controller
     /** home dashboard */
     public function index()
     {
-        return view('dashboard.home');
+        $numberOfStudents = Student::count();
+        $numberOfTeachers = Teacher::count();
+        $numberOfDepartments = Department::count();
+        $numberOfClasses = SmClass::count();
+        return view('dashboard.home', compact('numberOfStudents', 'numberOfTeachers', 'numberOfDepartments', 'numberOfClasses'));
     }
 
     /** profile user */

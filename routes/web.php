@@ -61,7 +61,7 @@ Route::controller(LoginController::class)->group(function () {
 // ----------------------------- register -------------------------//
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'register')->name('register');
-    Route::post('/register','storeUser')->name('register');    
+    Route::post('/register','storeUser')->name('register');
 });
 
 // -------------------------- main dashboard ----------------------//
@@ -113,5 +113,9 @@ Route::controller(TeacherController::class)->group(function () {
 Route::controller(DepartmentController::class)->group(function () {
     Route::get('department/list/page', 'departmentList')->middleware('auth')->name('department/list/page'); // department/list/page
     Route::get('department/add/page', 'indexDepartment')->middleware('auth')->name('department/add/page'); // page add department
-    Route::get('department/edit/page', 'editDepartment')->middleware('auth')->name('department/edit/page'); // page add department
+    // Route::get('department/edit/page', 'editDepartment')->middleware('auth')->name('department/edit/page'); // page add department
+    Route::post('department/add/save', 'departmentSave')->name('department/add/save'); // save record department
+    Route::get('department/edit/{id}', 'editDepartment')->middleware('auth')->name('department/edit/page'); // view for edit
+    Route::post('department/update/{id}', 'departmentUpdate')->name('department/update'); // update record department
+    Route::post('department/delete/{id}', 'departmentDelete')->name('department/delete');
 });

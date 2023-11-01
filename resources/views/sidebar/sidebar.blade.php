@@ -7,13 +7,13 @@
                 </li>
                 <li class="{{set_active(['setting/page'])}}">
                     <a href="{{ route('setting/page') }}">
-                        <i class="fas fa-cog"></i> 
+                        <i class="fas fa-cog"></i>
                         <span>Settings</span>
                     </a>
                 </li>
                 <li class="submenu {{set_active(['home','teacher/dashboard','student/dashboard'])}}">
                     <a href="#"><i class="feather-grid"></i>
-                        <span> Dashboard</span> 
+                        <span> Dashboard</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
@@ -25,7 +25,7 @@
                 @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
                 <li class="submenu {{set_active(['list/users'])}} {{ (request()->is('view/user/edit/*')) ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-shield-alt"></i>
-                        <span>User Management</span> 
+                        <span>User Management</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
@@ -46,7 +46,28 @@
                         <li><a href=""  class="{{ (request()->is('student/profile/*')) ? 'active' : '' }}">Student View</a></li>
                     </ul>
                 </li>
-
+                <li class="submenu">
+                    <a href="#"><i class="fas fa-book-reader"></i>
+                        <span> Staffs</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="#">All Staffs</a></li>
+                        <li><a href="#">Teaching Staffs</a></li>
+                        <li><a href="#">Non-Teaching Staffs</a></li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="#"><i class="fas fa-book-reader"></i>
+                        <span> Classes</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="#">All Classes</a></li>
+                        <li><a href="#">O-Level</a></li>
+                        <li><a href="#">A-Level</a></li>
+                    </ul>
+                </li>
                 <li class="submenu  {{set_active(['teacher/add/page','teacher/list/page','teacher/grid/page','teacher/edit'])}} {{ (request()->is('teacher/edit/*')) ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i>
                         <span> Teachers</span>
@@ -59,7 +80,7 @@
                         <li><a class="{{ (request()->is('teacher/edit/*')) ? 'active' : '' }}">Teacher Edit</a></li>
                     </ul>
                 </li>
-                
+
                 <li class="submenu {{set_active(['department/add/page','department/edit/page'])}}">
                     <a href="#"><i class="fas fa-building"></i>
                         <span> Departments</span>
@@ -68,7 +89,7 @@
                     <ul>
                         <li><a href="{{ route('department/list/page') }}" class="{{set_active(['department/list/page'])}}">Department List</a></li>
                         <li><a href="{{ route('department/add/page') }}" class="{{set_active(['department/add/page'])}}">Department Add</a></li>
-                        <li><a href="{{ route('department/edit/page') }}" class="{{set_active(['department/edit/page'])}}">Department Edit</a></li>
+                        {{-- <li><a href="{{ route('department/edit/page') }}" class="{{set_active(['department/edit/page'])}}">Department Edit</a></li> --}}
                     </ul>
                 </li>
                 <li class="submenu">
@@ -95,6 +116,11 @@
                         <li><a href="view-invoice.html">Invoices Details</a></li>
                         <li><a href="invoices-settings.html">Invoices Settings</a></li>
                     </ul>
+                </li>
+                <li class="submenu">
+                    <a href="#"><i class="fas fa-book-reader"></i>
+                        <span> Parents</span>
+                    </a>
                 </li>
                 <li class="menu-title">
                     <span>Management</span>
