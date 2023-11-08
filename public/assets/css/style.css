@@ -1459,9 +1459,11 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
     color: #ababab
 }
 
+
+
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-    background-color: #53f33e;
-    border-color: #53f33e
+    background-color: #fffb00;
+    border-color: #fffb00
 }
 
 .pagination>li>a, .pagination>li>span {

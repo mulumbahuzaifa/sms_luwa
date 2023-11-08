@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Students</h3>
+                            <h3 class="page-title">Students (Total : {{ $studentList->total() }})</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('student/list') }}">Student</a></li>
                                 <li class="breadcrumb-item active">All Students</li>
@@ -19,28 +19,26 @@
             {{-- message --}}
             {!! Toastr::message() !!}
             <div class="student-group-form">
+                <form action="search_student" method="GET">
                 <div class="row">
+
                     <div class="col-lg-3 col-md-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by ID ...">
+                            <input type="text" name="search" class="form-control" placeholder="Search by Name ...">
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    {{-- <div class="col-lg-4 col-md-6">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Name ...">
+                            <input type="text" class="form-control" placeholder="Search by Admission ID ...">
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search by Phone ...">
-                        </div>
-                    </div>
+                    </div> --}}
                     <div class="col-lg-2">
                         <div class="search-student-btn">
                             <button type="btn" class="btn btn-primary">Search</button>
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
             <div class="row">
                 <div class="col-sm-12">
@@ -72,11 +70,12 @@
                                             </th>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Class</th>
-                                            <th>DOB</th>
-                                            <th>Parent Name</th>
+                                            <th>Email</th>
+                                            <th>Gender</th>
+                                            <th>Admission Number</th>
+                                            <th>Roll Number</th>
                                             <th>Mobile Number</th>
-                                            <th>Address</th>
+                                            <th>Join Date</th>
                                             <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
@@ -89,8 +88,8 @@
                                                 </div>
                                             </td>
                                             <td>STD{{ ++$key }}</td>
-                                            <td hidden class="id">{{ $list->id }}</td>
-                                            <td hidden class="avatar">{{ $list->upload }}</td>
+                                            <td  class="id">{{ $list->name }} {{ $list->last_name }}</td>
+                                            {{-- <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a href="student-details.html"class="avatar avatar-sm me-2">
@@ -98,12 +97,13 @@
                                                     </a>
                                                     <a href="student-details.html">{{ $list->first_name }} {{ $list->last_name }}</a>
                                                 </h2>
-                                            </td>
-                                            <td>{{ $list->class }} {{ $list->section }}</td>
-                                            <td>{{ $list->date_of_birth }}</td>
-                                            <td>Soeng Soeng</td>
+                                            </td> --}}
+                                            <td>{{ $list->email }}</td>
+                                            <td>{{ $list->gender }}</td>
+                                            <td>{{ $list->admission_number }}</td>
+                                            <td>{{ $list->roll_number }}</td>
                                             <td>{{ $list->phone_number }}</td>
-                                            <td>110 Sen Sok Steet,PP</td>
+                                            <td>{{ date('d-m-Y H:i A',  strtotime($list->joined_date)) }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
                                                     <a href="{{ url('student/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
@@ -118,6 +118,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div style="padding: 10px; float: right;">
+                                    {!! $studentList->appends(request()->input())->links() !!}
+                                </div>
                             </div>
                         </div>
                     </div>

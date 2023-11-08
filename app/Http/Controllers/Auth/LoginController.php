@@ -15,6 +15,9 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use App\Rules\MatchOldPassword;
+use App\Mail\ForgotPasswordMail;
+use Mail;
+use Str;
 
 class LoginController extends Controller
 {
@@ -85,9 +88,22 @@ class LoginController extends Controller
                 Session::put('position', $user->position);
                 Session::put('department', $user->department);
                 Toastr::success('Login successfully :)','Success');
-                return redirect()->intended('home');
+
+                if ($user->role_name == 'Admin') {
+                    # code...
+                }else if($user->role_name == 'Super Admin'){
+                    return redirect()->intended('home');
+                }else if($user->role_name == 'Student'){
+                    return redirect()->intended('student/dashboard');
+                }else if($user->role_name == 'Teacher'){
+                    return redirect()->intended('teacher/dashboard');
+                }else if($user->role_name == 'Parent'){
+                    return redirect()->intended('student/dashboard');
+                }
+
             } else {
                 Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
+
                 return redirect('login');
             }
 
@@ -98,6 +114,23 @@ class LoginController extends Controller
         }
     }
 
+    public function forgotPassword(){
+        return view('auth.forgot-password');
+    }
+
+    public function postForgotPassword(Request $request){
+        $user = User::getEmailSingle($request->email);
+        if(!empty($user)){
+            $user->remember_token = Str::random(30);
+            $user->save();
+
+            Mail::to($user->email)->send(new ForgotPasswordMail($user));
+
+            return redirect()->back()->with('success', "Please check your email and reset your password");
+        }else{
+            return redirect()->back()->with('error', "Email not found in the system");
+        }
+    }
 
 
     /** logout */

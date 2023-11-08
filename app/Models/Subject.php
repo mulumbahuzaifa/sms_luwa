@@ -15,13 +15,28 @@ class Subject extends Model
         'level',
         'description',
         'compulsory',
-        'class_level',
-        'teacher_id', // If using a foreign key to associate with a Teacher model
+        'department_id', // If using a foreign key to associate with a Teacher model
     ];
+
+    static public function getSubject(){
+        $return = Subject::orderBy('id', 'desc')->get();
+        return $return;
+    }
+
 
     // Define relationships if necessary
     public function teacher()
     {
         return $this->belongsTo(Staff::class); // Assuming you have a Teacher model
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id'); // Assuming you have a Department model
+    }
+
+    // public function class()
+    // {
+    //     return $this->belongsTo(SmClass::class, 'class_id'); // Assuming you have a Department model
+    // }
 }

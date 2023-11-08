@@ -33,7 +33,7 @@
                     </span>
                 @enderror
                 </div>
-                
+
                 <div class="form-group">
                     <label>Password <span class="login-danger">*</span></label>
                     <input type="password" class="form-control pass-input  @error('password') is-invalid @enderror" name="password">

@@ -9,13 +9,29 @@ class SmClass extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'level',
-        'class_code',
-        'year',
-        'class_teacher_id', // If using a foreign key to associate with a Teacher model
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'level',
+    //     'class_code',
+    //     'year',
+    //     'class_teacher_id', // If using a foreign key to associate with a Teacher model
+    // ];
+
+    protected $table = 'sm_classes';
+
+    static public function getRecord(){
+        $return = SmClass::orderBy('id', 'desc')->paginate(20);
+        return $return;
+    }
+
+    static public function getSingle($id){
+        return self::find($id);
+    }
+
+    static public function getClass(){
+        $return = SmClass::orderBy('class_code', 'desc')->get();
+        return $return;
+    }
 
     // Define relationships if necessary
     public function students()

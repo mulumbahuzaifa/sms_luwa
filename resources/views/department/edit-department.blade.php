@@ -1,6 +1,9 @@
 
 @extends('layouts.master')
 @section('content')
+@push('style')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+@endpush
 {{-- message --}}
 {!! Toastr::message() !!}
     <div class="page-wrapper">
@@ -10,7 +13,7 @@
                     <div class="col">
                         <h3 class="page-title">Edit Department</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="departments.html">Department</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('department/list/page') }}">Department</a></li>
                             <li class="breadcrumb-item active">Edit Department</li>
                         </ul>
                     </div>

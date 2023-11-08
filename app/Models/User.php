@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Request;
 
 class User extends Authenticatable
 {
@@ -26,7 +27,6 @@ class User extends Authenticatable
         'status',
         'role_name',
         'email',
-        'role_name',
         'avatar',
         'position',
         'department',
@@ -51,4 +51,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    static public function getEmailSingle($email){
+        return User::where('email', '=', $email)->first();
+    }
+
+    static public function getTokenSingle($remember_token){
+        return User::where('remember_token', '=', $remember_token)->first();
+    }
+
+    static public function studentList(){
+        $return = self::select('users.*')
+            ->where('role_name', '=', 'Student');
+            if(!empty(Request::get('name'))){
+                $return = $return->where('name', 'like', '%'.Request::get('name').'%');
+            }
+            if(!empty(Request::get('email'))){
+                $return = $return->where('name', 'like', '%'.Request::get('email').'%');
+            }
+            if(!empty(Request::get('date'))){
+                $return = $return->where('class_subject.created_at', 'like', '%'.Request::get('date').'%');
+            }
+        $return = $return->orderBy('users.id', 'asc')
+            ->paginate(20);
+
+        return $return;
+
+    }
 }

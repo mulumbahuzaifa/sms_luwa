@@ -27,7 +27,7 @@
                         <span class="checkmark"></span>
                     </label>
                 </div>
-                <a href="forgot-password.html">Forgot Password?</a>
+                <a href="{{ route('forgotPassword') }}">Forgot Password?</a>
             </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">Login</button>

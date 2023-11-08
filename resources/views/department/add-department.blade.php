@@ -13,7 +13,7 @@
                     <div class="col">
                         <h3 class="page-title">Add Department</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="departments.html">Department</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('department/list/page') }}">Departments</a></li>
                             <li class="breadcrumb-item active">Add Department</li>
                         </ul>
                     </div>
@@ -127,7 +127,7 @@ $(document).ready(function(){
 <script>
     flatpickr('#datepicker', {
         enableTime: false,
-        dateFormat: 'd-m-Y'
+        dateFormat: 'd-m-Y',
     })
 </script>
 @endpush

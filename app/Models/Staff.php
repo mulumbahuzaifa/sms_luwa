@@ -28,6 +28,6 @@ class Staff extends Model
     // Define relationships if necessary
     public function department()
     {
-        return $this->belongsTo(Department::class); // Assuming you have a Department model
+        return $this->belongsTo(Department::class, 'department_id'); // Assuming you have a Department model
     }
 }
