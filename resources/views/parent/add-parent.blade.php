@@ -32,8 +32,8 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>First Name <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" placeholder="Enter First Name" value="{{ old('first_name') }}">
-                                            @error('first_name')
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Enter First Name" value="{{ old('name') }}">
+                                            @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -54,9 +54,14 @@
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Email <span class="login-danger">*</span></label>
-                                            <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Enter email" value="{{ old('email') }}">
-                                            @error('email')
+                                            <label>Gender <span class="login-danger">*</span></label>
+                                            <select class="form-control select  @error('gender') is-invalid @enderror" name="gender">
+                                                <option selected disabled>Select Gender</option>
+                                                <option value="Female" {{ old('gender') == 'Female' ? "selected" :"Female"}}>Female</option>
+                                                <option value="Male" {{ old('gender') == 'Male' ? "selected" :""}}>Male</option>
+                                                <option value="Others" {{ old('gender') == 'Others' ? "selected" :""}}>Others</option>
+                                            </select>
+                                            @error('gender')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -77,8 +82,8 @@
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms calendar-icon">
-                                            <label>Parent address <span class="login-danger">*</span> </label>
-                                            <input class="form-control @error('address') is-invalid @enderror" type="text" name="address" placeholder="Enter Your Address" value="{{ old('address') }}">
+                                            <label>Parent address</label>
+                                            <input class="form-control @error('address') is-invalid @enderror" type="text" name="address" placeholder="Enter Parent Address" value="{{ old('address') }}">
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -87,6 +92,74 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms calendar-icon">
+                                            <label>Parent Occupation</label>
+                                            <input class="form-control @error('occupation') is-invalid @enderror" type="text" name="occupation" placeholder="Enter Parent occupation" value="{{ old('occupation') }}">
+                                            @error('occupation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Status <span class="login-danger">*</span></label>
+                                            <select class="form-control select  @error('status') is-invalid @enderror" name="status">
+                                                <option selected disabled>Select Status</option>
+                                                <option value="0" {{ old('status') == 0 ? "selected" :""}}>Active</option>
+                                                <option value="1" {{ old('status') == 1 ? "selected" :""}}>Inactive</option>
+                                            </select>
+                                            @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group students-up-files">
+                                            <label>Upload Parent Photo (150px X 150px)</label>
+                                            <div class="uplod">
+                                                <label class="file-upload image-upbtn mb-0 @error('avatar') is-invalid @enderror">
+                                                    Choose File <input type="file" name="avatar">
+                                                </label>
+                                                @error('avatar')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="col-12 col-sm-12">
+                                        <div class="form-group local-forms">
+                                            <label>E-Mail <span class="login-danger">*</span></label>
+                                            <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Enter Email Address" value="{{ old('email') }}">
+                                            <span class="profile-views"><i class="fas fa-envelope"></i></span>
+
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12">
+                                        <div class="form-group local-forms">
+                                            <label>Password <span class="login-danger">*</span></label>
+                                            <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}">
+                                            <span class="profile-views feather-eye toggle-password"></span>
+                                            @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="student-submit">
                                             <button type="submit" class="btn btn-primary">Submit</button>

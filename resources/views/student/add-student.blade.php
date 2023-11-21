@@ -66,6 +66,17 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    {{-- <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Student ID <span class="login-danger">*</span></label>
+                                            <input class="form-control @error('user_id') is-invalid @enderror" type="text" name="user_id" placeholder="Enter Admission Number" value="{{ old('user_id') }}">
+                                            @error('user_id')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div> --}}
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Roll Number <span class="login-danger">*</span></label>
@@ -82,9 +93,11 @@
                                             <label>Class <span class="login-danger">*</span></label>
                                             <select class="form-control select @error('class_id') is-invalid @enderror" required name="class_id">
                                                 <option selected disabled>Please Select Class </option>
-                                                <option value="12" {{ old('class_id') == '12' ? "selected" :""}}>12</option>
-                                                <option value="11" {{ old('class_id') == '11' ? "selected" :""}}>11</option>
-                                                <option value="10" {{ old('class_id') == '10' ? "selected" :""}}>10</option>
+                                                @foreach ($getClass as $value)
+                                                    <option value="{{ $value->id }}" {{ old('class_id') == $value->id ? "selected" :""}}>{{ $value->name }}</option>
+
+                                                @endforeach
+
                                             </select>
                                             @error('class_id')
                                                 <span class="invalid-feedback" role="alert">
@@ -112,7 +125,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms calendar-icon">
                                             <label>Date Of Birth <span class="login-danger">*</span></label>
-                                            <input class="form-control datetimepicker @error('date_of_birth') is-invalid @enderror" required name="date_of_birth" type="text" placeholder="DD-MM-YYYY" value="{{ old('date_of_birth') }}">
+                                            <input class="form-control  @error('date_of_birth') is-invalid @enderror" required name="date_of_birth" type="date" placeholder="DD-MM-YYYY" value="{{ old('date_of_birth') }}">
                                             @error('date_of_birth')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -156,8 +169,8 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Admission Date <span class="login-danger">*</span></label>
-                                            <input class="form-control datetimepicker @error('join_date') is-invalid @enderror"  type="date" name="join_date" placeholder="DD-MM-YYYY" value="{{ old('join_date') }}">
-                                            @error('join_date')
+                                            <input class="form-control  @error('admission_date') is-invalid @enderror"  type="date" name="admission_date" placeholder="DD-MM-YYYY" value="{{ old('admission_date') }}">
+                                            @error('admission_date')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -241,7 +254,7 @@
                                     <div class="col-12 col-sm-12">
                                         <div class="form-group local-forms">
                                             <label>Password <span class="login-danger">*</span></label>
-                                            <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password">
+                                            <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}">
                                             <span class="profile-views feather-eye toggle-password"></span>
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">

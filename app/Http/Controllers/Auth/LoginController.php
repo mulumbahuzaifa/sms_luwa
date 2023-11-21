@@ -90,7 +90,7 @@ class LoginController extends Controller
                 Toastr::success('Login successfully :)','Success');
 
                 if ($user->role_name == 'Admin') {
-                    # code...
+                    return redirect()->intended('home');
                 }else if($user->role_name == 'Super Admin'){
                     return redirect()->intended('home');
                 }else if($user->role_name == 'Student'){
@@ -98,10 +98,10 @@ class LoginController extends Controller
                 }else if($user->role_name == 'Teacher'){
                     return redirect()->intended('teacher/dashboard');
                 }else if($user->role_name == 'Parent'){
-                    return redirect()->intended('student/dashboard');
+                    return redirect()->intended('parent/dashboard');
                 }
-
             } else {
+
                 Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
 
                 return redirect('login');

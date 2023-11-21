@@ -31,8 +31,9 @@
                         </div>
                         <div class="col ms-md-n2 profile-user-info">
                             <h4 class="user-name mb-0">{{ Session::get('name') }}</h4>
-                            <h6 class="text-muted">{{  Session::get('role_name') }}</h6>
-
+                            <h6 class="text-muted">{{ $teacher->position }}</h6>
+                            <div class="user-Location"><i class="fas fa-map-marker-alt"></i> {{ $teacher->address }}</div>
+                            <div class="about-text">{{ $teacher->note }}</div>
                         </div>
                         <div class="col-auto profile-btn">
                             <a href="" class="btn btn-primary">Edit</a>
@@ -67,20 +68,28 @@
                                         </h5>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
-                                            <p class="col-sm-9">{{ Session::get('name') }} {{ $teacher->last_name }}</p>
+                                            <p class="col-sm-9">{{ Session::get('name') }}</p>
                                         </div>
-                                        {{-- <div class="row">
+                                        <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
                                             <p class="col-sm-9">{{ date('d-m-Y',  strtotime($teacher->date_of_birth)) }}</p>
-                                        </div> --}}
+                                        </div>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
                                             <p class="col-sm-9"><a href="#"
                                                     class="__cf_email__"
-                                                    data-cfemail="{{  $teacher->email }}">{{  $teacher->email }}</a>
+                                                    data-cfemail="{{ $teacher->email }}">{{ $teacher->email }}</a>
                                             </p>
                                         </div>
-
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
+                                            <p class="col-sm-9">{{ $teacher->phone_number }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
+                                            <p class="col-sm-9 mb-0">{{ $teacher->current_address }},<br>
+                                             </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +131,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <form action="{{ route('update/profile', $teacher->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('update/teacher/profile', $teacher->id) }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" class="form-control" name="id" value="{{ $teacher->id }}">
                                         <div class="row">
@@ -150,14 +159,112 @@
                                                     @enderror
                                                 </div>
                                             </div>
-
                                             <div class="col-12 col-sm-4">
                                                 <div class="form-group local-forms">
-                                                    <label>E-Mail <span class="login-danger">*</span></label>
-                                                    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Enter Email Address" value="{{ old('email', $teacher->email) }}">
-                                                    <span class="profile-views"><i class="fas fa-envelope"></i></span>
+                                                    <label>Gender <span class="login-danger">*</span></label>
+                                                    <select class="form-control select  @error('gender') is-invalid @enderror" name="gender">
+                                                        <option selected disabled>Select Gender</option>
+                                                        <option value="Female" {{ old('religion',$teacher->gender) == 'Female' ? "selected" :""}}>Female</option>
+                                                        <option value="Male" {{ old('religion',$teacher->gender) == 'Male' ? "selected" :""}}>Male</option>
+                                                        <option value="Others" {{ old('religion',$teacher->gender) == 'Others' ? "selected" :""}}>Others</option>
+                                                    </select>
+                                                    @error('gender')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Religion</label>
+                                                    <input class="form-control @error('religion') is-invalid @enderror" type="text" name="religion" placeholder="Religion" value="{{ old('religion', $teacher->religion) }}">
+                                                    @error('religion')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms calendar-icon">
+                                                    <label>Date Of Birth <span class="login-danger">*</span></label>
+                                                    <input type="date" class="form-control  @error('date_of_birth') is-invalid @enderror" name="date_of_birth" placeholder="DD-MM-YYYY" value="{{ old('date_of_birth', $teacher->date_of_birth) }}">
+                                                    @error('date_of_birth')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Mobile <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" placeholder="Enter Phone" value="{{ old('phone_number',$teacher->phone_number) }}">
+                                                    @error('phone_number')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Marital Status <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('marital_status') is-invalid @enderror" name="marital_status" placeholder="Marital Status" value="{{ old('marital_status', $teacher->marital_status) }}">
+                                                    @error('marital_status')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
-                                                    @error('email')
+                                            <div class="col-12 col-sm-4">
+                                                <div class="form-group students-up-files">
+                                                    <label>Update Profile Photo (150px X 150px)</label>
+                                                    <div class="uplod">
+                                                        @if ($teacher->avatar)
+                                                        <h2 class="table-avatar">
+                                                            <a class="avatar avatar-sm me-2">
+                                                                <img class="avatar-img rounded-circle" src="{{ Storage::url('teacher-photos/'.$teacher->avatar) }}" alt="{{ $teacher->name }}">
+                                                            </a>
+                                                        </h2>
+                                                        @endif
+                                                        <label class="file-upload image-upbtn mb-0 @error('avatar') is-invalid @enderror">
+                                                            Choose File <input type="file" name="avatar">
+                                                        </label>
+                                                        <input type="hidden" name="image_hidden" value="{{ old('avatar', $teacher->avatar) }}">
+                                                        @error('avatar')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <h5 class="form-title"><span>Address</span></h5>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="form-group local-forms">
+                                                    <label>Current Address <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('current_address') is-invalid @enderror" name="current_address" placeholder="Enter Current Address" value="{{ old('current_address',$teacher->current_address) }}">
+                                                    @error('current_address')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group local-forms">
+                                                    <label>Permanent Address <span class="login-danger">*</span></label>
+                                                    <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" placeholder="Enter Permanent address" value="{{ old('address', $teacher->address) }}">
+                                                    @error('address')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>

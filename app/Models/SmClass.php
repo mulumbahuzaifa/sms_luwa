@@ -32,6 +32,10 @@ class SmClass extends Model
         $return = SmClass::orderBy('class_code', 'desc')->get();
         return $return;
     }
+    static public function getStudentClass(){
+        $return = SmClass::orderBy('class_code', 'desc')->get();
+        return $return;
+    }
 
     // Define relationships if necessary
     public function students()

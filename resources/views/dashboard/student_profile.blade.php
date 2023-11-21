@@ -23,19 +23,20 @@
                         <div class="col-auto profile-image">
                             <a href="#">
                                 @if (!empty(Session::get('avatar')))
-                                <img class="rounded-circle" alt="{{ Session::get('name') }}" src="{{ Storage::url('teacher-photos/'.Session::get('avatar')) }}">
+                                <img class="rounded-circle" alt="{{ Session::get('name') }}" src="{{ Storage::url('student-photos/'.Session::get('avatar')) }}">
                                 @else
                                 <img class="rounded-circle" src="{{ URL::to('images/photo_defaults.jpg') }}" alt="{{ Session::get('name') }}">
                                 @endif
                             </a>
                         </div>
                         <div class="col ms-md-n2 profile-user-info">
-                            <h4 class="user-name mb-0">{{ Session::get('name') }}</h4>
-                            <h6 class="text-muted">{{  Session::get('role_name') }}</h6>
-
+                            <h4 class="user-name mb-0">{{ Session::get('name') }} {{ $teacher->last_name }}</h4>
+                            <h6 class="text-muted">ADMISSION NO: {{ $teacher->admission_number }}</h6>
+                            <div class="user-Location"><i class="fas fa-map-marker-alt"></i> {{ $teacher->address }}</div>
+                            <div class="about-text">CLASS {{ $teacher->class_name }}</div>
                         </div>
                         <div class="col-auto profile-btn">
-                            <a href="" class="btn btn-primary">Edit</a>
+                            {{-- <a href="" class="btn btn-primary">Edit</a> --}}
                         </div>
                     </div>
                 </div>
@@ -44,9 +45,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#per_details_tab">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#edit_details_tab">Edit</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#password_tab">Password</a>
                         </li>
@@ -69,18 +68,50 @@
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Name</p>
                                             <p class="col-sm-9">{{ Session::get('name') }} {{ $teacher->last_name }}</p>
                                         </div>
-                                        {{-- <div class="row">
+                                        <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Date of Birth</p>
                                             <p class="col-sm-9">{{ date('d-m-Y',  strtotime($teacher->date_of_birth)) }}</p>
-                                        </div> --}}
+                                        </div>
                                         <div class="row">
                                             <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Email</p>
                                             <p class="col-sm-9"><a href="#"
                                                     class="__cf_email__"
-                                                    data-cfemail="{{  $teacher->email }}">{{  $teacher->email }}</a>
+                                                    data-cfemail="{{ $teacher->email }}">{{ $teacher->email }}</a>
                                             </p>
                                         </div>
-
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Mobile</p>
+                                            <p class="col-sm-9">{{ $teacher->phone_number }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Gender</p>
+                                            <p class="col-sm-9">{{ $teacher->gender }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Religion</p>
+                                            <p class="col-sm-9">{{ $teacher->religion }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Admission Date</p>
+                                            <p class="col-sm-9">{{ $teacher->admission_date }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Blood Group</p>
+                                            <p class="col-sm-9">{{ $teacher->blood_group }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Height</p>
+                                            <p class="col-sm-9">{{ $teacher->height }}</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Weight</p>
+                                            <p class="col-sm-9">{{ $teacher->weight }}</p>
+                                        </div>
+                                        {{-- <div class="row">
+                                            <p class="col-sm-3 text-muted text-sm-end mb-0">Address</p>
+                                            <p class="col-sm-9 mb-0">{{ $teacher->address }},<br>
+                                             </p>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -118,64 +149,7 @@
                         </div>
                     </div>
 
-                    <div id="edit_details_tab" class="tab-pane fade">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <form action="{{ route('update/profile', $teacher->id) }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" class="form-control" name="id" value="{{ $teacher->id }}">
-                                        <div class="row">
 
-
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>First Name <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Enter First Name" value="{{ old('name',  $teacher->name) }}">
-                                                    @error('name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>Last Name <span class="login-danger">*</span></label>
-                                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" placeholder="Enter Last Name" value="{{ old('last_name',  $teacher->last_name) }}">
-                                                    @error('last_name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-4">
-                                                <div class="form-group local-forms">
-                                                    <label>E-Mail <span class="login-danger">*</span></label>
-                                                    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Enter Email Address" value="{{ old('email', $teacher->email) }}">
-                                                    <span class="profile-views"><i class="fas fa-envelope"></i></span>
-
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="student-submit">
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div id="password_tab" class="tab-pane fade">
                         <div class="card">
                             <div class="card-body">

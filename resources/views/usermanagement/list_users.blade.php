@@ -55,9 +55,21 @@
                                         <td class="user_id">{{ $list->user_id }}</td>
                                         <td hidden class="avatar">{{ $list->avatar }}</td>
                                         <td>
+
                                             <h2 class="table-avatar">
                                                 <a class="avatar avatar-sm me-2">
-                                                    <img class="avatar-img rounded-circle"src="/images/{{ $list->avatar }}"alt="{{ $list->name }}">
+                                                    @if (!empty($list->avatar))
+                                                        @if ($list->role_name === 'Teacher')
+                                                            <img class="avatar-img rounded-circle" src="{{ Storage::url('teacher-photos/'.$list->avatar) }}" alt="{{ $list->name }}">
+                                                        @elseif ($list->role_name === 'Student')
+                                                            <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$list->avatar) }}" alt="{{ $list->name }}">
+                                                        @elseif ($list->role_name === 'Parent')
+                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('parent-photos/'.$list->avatar) }}" alt="{{ $list->name }}">
+                                                        @endif
+                                                    @else
+                                                        <img class="avatar-img rounded-circle" src="{{ URL::to('images/photo_defaults.jpg') }}" alt="{{ $list->name }}">
+                                                    @endif
+                                                    {{-- <img class="avatar-img rounded-circle"src="/images/{{ $list->avatar }}"alt="{{ $list->name }}"> --}}
                                                 </a>
                                             </h2>
                                         </td>
@@ -74,7 +86,7 @@
                                                 <a class="text-warning">{{ $list->status }}</a>
                                                 @elseif ($list->status === 'Disable')
                                                 <a class="text-danger" >{{ $list->status }}</a>
-                                                @else 
+                                                @else
                                                 @endif
                                             </div>
                                         </td>

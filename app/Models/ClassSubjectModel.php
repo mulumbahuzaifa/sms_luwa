@@ -30,7 +30,7 @@ class ClassSubjectModel extends Model
                 $return = $return->where('subjects.name', 'like', '%'.Request::get('subject_name').'%');
             }
             if(!empty(Request::get('date'))){
-                $return = $return->where('class_subject.created_at', 'like', '%'.Request::get('date').'%');
+                $return = $return->whereDate('class_subject.created_at', '=', Request::get('date'));
             }
         $return = $return->orderBy('class_subject.id', 'asc')
             ->paginate(20);
@@ -38,6 +38,16 @@ class ClassSubjectModel extends Model
         return $return;
     }
 
+    static public function MySubjects($class_id){
+        return  self::select('class_subject.*', 'sm_classes.name as class_name', 'subjects.name as subject_name', 'subjects.code as subject_code', 'subjects.level as subject_level', 'subjects.compulsory as subject_compulsory')
+            ->join('sm_classes', 'sm_classes.id', '=', 'class_subject.class_id')
+            ->join('subjects', 'subjects.id', '=', 'class_subject.subject_id')
+            ->where('class_subject.class_id', '=', $class_id)
+            ->where('class_subject.is_deleted', '=', 0)
+            ->where('class_subject.status', '=', 0)
+            ->orderBy('class_subject.id', 'asc')
+            ->paginate(20);
+    }
     static public function getAlreadyFirst($class_id, $subject_id){
         return self::where('class_id', '=', $class_id)->where('subject_id', '=', $subject_id)->first();
     }

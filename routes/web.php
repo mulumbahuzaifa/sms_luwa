@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AssignClassTeacherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\ClassSubjectController;
+use App\Http\Controllers\ClassTimetableController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserManagementController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Setting;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\SmClassController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ParentController;
@@ -43,28 +46,49 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth'],function()
 {
-    Route::get('home',function()
+    Route::group(['middleware'=>'admin'],function()
     {
-        return view('home');
-    });
-    // Route::get('home',function()
-    // {
-    //     return view('home');
-    // });
-});
-Route::group(['middleware'=>'teacher'],function()
-{
-    Route::get('teacher/dashboard',function()
-    {
-        return view('teacher/dashboard');
+        Route::get('home',function()
+        {
+            return view('home');
+        });
     });
 
 });
+    Route::group(['middleware'=>'teacher'],function()
+    {
+        Route::get('teacher/dashboard',function()
+        {
+            return view('teacher/dashboard');
+        });
+            // ----------------------- Subjects -----------------------------//
+        Route::controller(AssignClassTeacherController::class)->group(function () {
+
+            Route::get('teacher/my_class_subjects', 'MyClassSubjects')->name('teacherClassSubjects'); // My Class Subject
+
+        });
+        Route::controller(ClassTimetableController::class)->group(function () {
+
+            Route::get('teacher/my_class_subjects/class_timetable/{class_id}/{subject_id}', 'MyTimetableTeacher')->name('teacherClassSubjectTimetable'); // My Class Subject Timetable
+
+        });
+        // ------------------------ student -------------------------------//
+        Route::controller(StudentController::class)->group(function () {
+            Route::get('teacher/my_students', 'MyStudents')->name('teacher/my_students'); // list student
+
+        });
+
+    });
+
 Route::group(['middleware'=>'student'],function()
 {
     Route::get('student/dashboard',function()
     {
         return view('student/dashboard');
+    });
+
+    Route::controller(ClassTimetableController::class)->group(function () {
+        Route::get('student/timetable', 'MyTimetable')->name('student.timetable'); // list student
     });
 
 });
@@ -98,10 +122,17 @@ Route::controller(RegisterController::class)->group(function () {
 
 // -------------------------- main dashboard ----------------------//
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/home', 'index')->middleware('auth')->name('home');
+    Route::get('/home', 'index')->middleware('admin')->name('home');
     Route::get('user/profile/page', 'userProfile')->middleware('auth')->name('user/profile/page');
-    Route::get('teacher/dashboard', 'teacherDashboardIndex')->middleware('auth')->name('teacher/dashboard');
-    Route::get('student/dashboard', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
+    Route::post('user/profile/page', 'updateUserProfile')->middleware('auth')->name('update/profile');
+    Route::get('teacher/profile/page', 'userProfile')->middleware('teacher')->name('teacher/profile/page');
+    Route::post('teacher/profile/page', 'updateTeacherProfile')->middleware('teacher')->name('update/teacher/profile');
+    Route::get('student/profile/page', 'userProfile')->middleware('student')->name('student/profile/page');
+    // Route::post('student/profile/page', 'updateStudentProfile')->middleware('student')->name('update/student/profile');
+    Route::get('parent/profile/page', 'userProfile')->middleware('parent')->name('parent/profile/page');
+    // Route::post('parent/profile/page', 'updateParentProfile')->middleware('parent')->name('update/parent/profile');
+    Route::get('teacher/dashboard', 'teacherDashboardIndex')->middleware('teacher')->name('teacher/dashboard');
+    Route::get('student/dashboard', 'studentDashboardIndex')->middleware('student')->name('student/dashboard');
     Route::get('parent/dashboard', 'parentDashboardIndex')->middleware('auth')->name('parent/dashboard');
 });
 
@@ -126,8 +157,8 @@ Route::controller(StudentController::class)->group(function () {
     Route::get('student/add/page', 'studentAdd')->middleware('auth')->name('student/add/page'); // page student
     Route::post('student/add/save', 'studentSave')->name('student/add/save'); // save record student
     Route::get('student/edit/{id}', 'studentEdit'); // view for edit
-    Route::post('student/update', 'studentUpdate')->name('student/update'); // update record student
-    Route::post('student/delete', 'studentDelete')->name('student/delete'); // delete record student
+    Route::post('student/update/{id}', 'studentUpdate')->name('student/update'); // update record student
+    Route::post('student/delete/{id}', 'studentDelete')->name('student/delete'); // delete record student
     Route::get('student/profile/{id}', 'studentProfile')->middleware('auth'); // profile student
     Route::get('student/search_student', 'search_student')->middleware('auth'); // search student
 });
@@ -138,9 +169,9 @@ Route::controller(TeacherController::class)->group(function () {
     Route::get('teacher/list/page', 'teacherList')->middleware('auth')->name('teacher/list/page'); // page teacher
     Route::get('teacher/grid/page', 'teacherGrid')->middleware('auth')->name('teacher/grid/page'); // page grid teacher
     Route::post('teacher/save', 'saveRecord')->middleware('auth')->name('teacher/save'); // save record
-    Route::get('teacher/edit/{id}', 'editRecord'); // view teacher record
-    Route::post('teacher/update', 'updateRecordTeacher')->middleware('auth')->name('teacher/update'); // update record
-    Route::post('teacher/delete', 'teacherDelete')->name('teacher/delete'); // delete record teacher
+    Route::get('teacher/edit/{id}', 'editRecord')->middleware('auth')->name('teacher/edit'); // view teacher record
+    Route::post('teacher/update/{id}', 'updateRecordTeacher')->middleware('auth')->name('teacher/update'); // update record
+    Route::post('teacher/delete/{id}', 'teacherDelete')->name('teacher/delete'); // delete record teacher
 });
 
 // ----------------------- department -----------------------------//
@@ -182,6 +213,9 @@ Route::controller(ParentController::class)->group(function () {
     Route::get('parent/edit/{id}', 'parentEdit')->middleware('auth')->name('parent.edit'); // view for edit
     Route::post('parent/update/{id}', 'parentUpdate')->name('parent.update'); // update record department
     Route::post('parent/delete/{id}', 'parentDelete')->name('parent.delete');
+    Route::get('parent/my-student/{id}', 'myStudent')->name('parent.student');
+    Route::get('parent/assign_student_parent/{student_id}/{parent_id}', 'assignStudentParent')->name('assign_student_parent');
+    Route::get('parent/assign_student_parent_delete/{student_id}', 'assignStudentParentDelete')->name('assign_student_parent.delete');
 });
 
 // ----------------------- Subjects -----------------------------//
@@ -192,6 +226,9 @@ Route::controller(SubjectController::class)->group(function () {
     Route::get('subject/edit/{id}', 'subjectEdit')->middleware('auth')->name('subject.edit'); // view for edit
     Route::post('subject/update/{id}', 'subjectUpdate')->name('subject.update'); // update record department
     Route::post('subject/delete/{id}', 'subjectDelete')->name('subject.delete');
+    Route::get('student/my_subjects', 'mySubjects')->middleware('auth')->name('subject.student'); // search student
+    // Route::get('teacher/my_class_subjects', 'teacherClassSubjects')->middleware('auth')->name('teacherClassSubjects'); // search student
+
 });
 
 // -----------------------Assign Subjects -----------------------------//
@@ -204,5 +241,39 @@ Route::controller(ClassSubjectController::class)->group(function () {
     Route::post('admin/assign_subject/edit/{id}', 'update')->name('assign_subject.update'); // update record department
     Route::post('admin/assign_subject/edit_single/{id}', 'update_single')->name('assign_subject.update_single'); // update record department
     Route::post('admin/assign_subject/delete/{id}', 'delete')->name('assign_subject.delete');
+});
+
+// -----------------------Assign Class to Teacher -----------------------------//
+Route::controller(AssignClassTeacherController::class)->group(function () {
+    Route::get('admin/assign_class_teacher/list', 'list')->middleware('auth')->name('assign_class_teacher.list'); // class/list/page
+    Route::get('admin/assign_class_teacher/add', 'add')->middleware('auth')->name('assign_class_teacher.add'); // page add department
+    Route::post('admin/assign_class_teacher/add', 'insert')->name('assign_class_teacher.save'); // save record class
+    Route::get('admin/assign_class_teacher/edit/{id}', 'edit')->middleware('auth')->name('assign_class_teacher.edit'); // view for edit
+    Route::get('admin/assign_class_teacher/edit_single/{id}', 'edit_single')->middleware('auth')->name('assign_class_teacher.edit_single'); // view for edit
+    Route::post('admin/assign_class_teacher/edit/{id}', 'update')->name('assign_class_teacher.update'); // update record department
+    Route::post('admin/assign_class_teacher/edit_single/{id}', 'update_single')->name('assign_class_teacher.update_single'); // update record department
+    Route::post('admin/assign_class_teacher/delete/{id}', 'delete')->name('assign_class_teacher.delete');
+});
+
+//Class Timetable
+Route::controller(ClassTimetableController::class)->group(function () {
+    Route::get('admin/class_timetable/list', 'list')->middleware('auth')->name('class_timetable.list'); // class/list/page
+    Route::post('admin/class_timetable/get_subject', 'get_subject')->middleware('auth')->name('get_subject'); // page add department
+    Route::post('admin/class_timetable/add', 'insert_update')->name('class_timetable.insert_update'); // save record class
+    // Route::get('admin/assign_class_teacher/edit/{id}', 'edit')->middleware('auth')->name('assign_class_teacher.edit'); // view for edit
+    // Route::get('admin/assign_class_teacher/edit_single/{id}', 'edit_single')->middleware('auth')->name('assign_class_teacher.edit_single'); // view for edit
+    // Route::post('admin/assign_class_teacher/edit/{id}', 'update')->name('assign_class_teacher.update'); // update record department
+    // Route::post('admin/assign_class_teacher/edit_single/{id}', 'update_single')->name('assign_class_teacher.update_single'); // update record department
+    // Route::post('admin/assign_class_teacher/delete/{id}', 'delete')->name('assign_class_teacher.delete');
+});
+
+// ----------------------- Examination -----------------------------//
+Route::controller(ExaminationController::class)->group(function () {
+    Route::get('examination/list/page', 'examList')->middleware('auth')->name('exam.list'); // staff/list/page
+    Route::get('examination/add/page', 'addExam')->middleware('auth')->name('exam.add'); // page add department
+    Route::post('examination/add/save', 'saveExam')->middleware('auth')->name('exam.save'); // save record staff
+    Route::get('examination/edit/{id}', 'editExam')->middleware('auth')->name('exam.edit'); // view for edit
+    Route::post('examination/update/{id}', 'examUpdate')->middleware('auth')->name('exam.update'); // update record department
+    Route::post('examination/delete/{id}', 'examDelete')->middleware('auth')->name('exam.delete');
 });
 

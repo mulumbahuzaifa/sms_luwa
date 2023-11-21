@@ -7,10 +7,10 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Students List</h3>
+                            <h3 class="page-title">My Students List</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('student/list') }}">Student</a></li>
-                                <li class="breadcrumb-item active">All Students</li>
+                                <li class="breadcrumb-item"><a href="#">Student</a></li>
+                                <li class="breadcrumb-item active">My Students</li>
                             </ul>
                         </div>
                     </div>
@@ -19,22 +19,7 @@
             {{-- message --}}
             {!! Toastr::message() !!}
             <div class="student-group-form">
-                {{-- <form action="search_student" method="GET">
-                <div class="row">
 
-                    <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search by Name ...">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2">
-                        <div class="search-student-btn">
-                            <button type="btn" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </form> --}}
             <form method="GET" action="">
                 <div class="student-group-form">
                     <div class="row">
@@ -68,16 +53,7 @@
                                 <input type="text" value="{{ Request::get('class') }}" name="class" class="form-control" placeholder="Search by Class ...">
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6">
-                            <div class="form-group">
-                                <input type="text" value="{{ Request::get('caste') }}" name="caste" class="form-control" placeholder="Search by Caste ...">
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-                            <div class="form-group">
-                                <input type="text" value="{{ Request::get('phone_number') }}" name="phone_number" class="form-control" placeholder="Search by Phone No ...">
-                            </div>
-                        </div>
+
                         <div class="col-lg-2 col-md-6">
                             <div class="form-group">
                                 <select class="form-control select" name="gender">
@@ -110,13 +86,13 @@
                             <div class="page-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="page-title">Students (Total : {{ $studentList->total() }})</h3>
+                                        <h3 class="page-title">My Students (Total : {{ $studentList->total() }})</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="{{ route('student/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
+                                        {{-- <a href="{{ route('student/list') }}" class="btn btn-outline-gray me-2 active"><i class="feather-list"></i></a>
                                         <a href="{{ route('student/grid') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
                                         <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        <a href="{{ route('student/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        <a href="{{ route('student/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -126,14 +102,9 @@
                                     class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                     <thead class="student-thread">
                                         <tr>
-                                            <th>
-                                                <div class="form-check check-tables">
-                                                    <input class="form-check-input" type="checkbox" value="something">
-                                                </div>
-                                            </th>
+
                                             <th>#</th>
                                             <th>Student Name</th>
-                                            <th>Parent Name</th>
                                             <th>Email</th>
                                             <th>Admission-No</th>
                                             <th>Roll-No</th>
@@ -148,19 +119,13 @@
                                             <th>Blood Group</th>
                                             <th>Height</th>
                                             <th>Weight</th>
-                                            <th>Status</th>
                                             <th>Created-Date</th>
-                                            <th class="text-end">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($studentList as $key=>$list )
                                         <tr>
-                                            <td>
-                                                <div class="form-check check-tables">
-                                                    <input class="form-check-input" type="checkbox" value="something">
-                                                </div>
-                                            </td>
+
                                             <td>STD{{ ++$key }}</td>
                                             {{-- <td  class="id">{{ $list->name }} {{ $list->last_name }}</td> --}}
                                             <td hidden class="avatar">{{ $list->avatar }}</td>
@@ -174,7 +139,6 @@
                                                     <a href="student-details.html">{{ $list->name }} {{ $list->last_name }}</a>
                                                 </h2>
                                             </td>
-                                            <td>{{ $list->parent_name }} {{ $list->parent_last_name }}</td>
                                             <td>{{ $list->email }}</td>
                                             <td>{{ $list->admission_number }}</td>
                                             <td>{{ $list->roll_number }}</td>
@@ -201,25 +165,12 @@
                                             <td>{{ $list->blood_group }}</td>
                                             <td>{{ $list->height }}</td>
                                             <td>{{ $list->weight }}</td>
-                                            <td>{{ ($list->status == 0) ? 'Active' : 'Inactive' }}
+                                            <td>
+                                                @if ($list->created_at)
+                                                {{ date('d-m-Y',  strtotime($list->created_at)) }}
+                                                @endif
                                             </td>
-                                            <td class="text-end">
-                                                <div class="actions">
-                                                    <a href="{{ url('student/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
-                                                        <i class="feather-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('student/delete', $list->id) }}" method="POST">
-                                                        @csrf
-                                                        {{-- @method('DELETE') --}}
-                                                        <button  type="submit" class="btn btn-sm btn-danger" >
-                                                            <i class="feather-trash-2 me-1"></i>
-                                                        </button>
-                                                    </form>
-                                                    {{-- <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
-                                                        <i class="feather-trash-2 me-1"></i>
-                                                    </a> --}}
-                                                </div>
-                                            </td>
+
                                         </tr>
                                         @endforeach
                                     </tbody>

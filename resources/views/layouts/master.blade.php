@@ -27,12 +27,35 @@
     <div class="main-wrapper">
         <div class="header">
             <div class="header-left">
+                @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
                 <a href="{{ route('home') }}" class="logo">
                     <img src="{{ URL::to('assets/img/logo.png') }}" alt="Logo">
                 </a>
                 <a href="{{ route('home') }}" class="logo logo-small">
                     <img src="{{ URL::to('assets/img/logo-small.png') }}" alt="Logo" width="30" height="30">
                 </a>
+                @elseif (Session::get('role_name') === 'Teacher')
+                <a href="{{ route('teacher/dashboard') }}" class="logo">
+                    <img src="{{ URL::to('assets/img/logo.png') }}" alt="Logo">
+                </a>
+                <a href="{{ route('teacher/dashboard') }}" class="logo logo-small">
+                    <img src="{{ URL::to('assets/img/logo-small.png') }}" alt="Logo" width="30" height="30">
+                </a>
+                @elseif (Session::get('role_name') === 'Student')
+                <a href="{{ route('student/dashboard') }}" class="logo">
+                    <img src="{{ URL::to('assets/img/logo.png') }}" alt="Logo">
+                </a>
+                <a href="{{ route('student/dashboard') }}" class="logo logo-small">
+                    <img src="{{ URL::to('assets/img/logo-small.png') }}" alt="Logo" width="30" height="30">
+                </a>
+                @elseif (Session::get('role_name') === 'Parent')
+                <a href="{{ route('parent/dashboard') }}" class="logo">
+                    <img src="{{ URL::to('assets/img/logo.png') }}" alt="Logo">
+                </a>
+                <a href="{{ route('parent/dashboard') }}" class="logo logo-small">
+                    <img src="{{ URL::to('assets/img/logo-small.png') }}" alt="Logo" width="30" height="30">
+                </a>
+                @endif
             </div>
             <div class="menu-toggle">
                 <a href="javascript:void(0);" id="toggle_btn">
@@ -80,7 +103,7 @@
                                         <div class="media d-flex">
                                             <span class="avatar avatar-sm flex-shrink-0">
                                                 <img class="avatar-img rounded-circle" alt="User Image"
-                                                    src="assets/img/profiles/avatar-02.jpg">
+                                                    src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
                                             </span>
                                             <div class="media-body flex-grow-1">
                                                 <p class="noti-details"><span class="noti-title">Carlson Tech</span> has
@@ -95,7 +118,7 @@
                                     <a href="#">
                                         <div class="media d-flex">
                                             <span class="avatar avatar-sm flex-shrink-0">
-                                                <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-11.jpg">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="{{ URL::to('assets/img/profiles/avatar-11.jpg') }}">
                                             </span>
                                             <div class="media-body flex-grow-1">
                                                 <p class="noti-details"><span class="noti-title">International Software Inc</span> has sent you a invoice in the amount of <span class="noti-title">$218</span></p>
@@ -109,7 +132,7 @@
                                     <a href="#">
                                         <div class="media d-flex">
                                             <span class="avatar avatar-sm flex-shrink-0">
-                                                <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-17.jpg">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="{{ URL::to('assets/img/profiles/avatar-17.jpg') }}">
                                             </span>
                                             <div class="media-body flex-grow-1">
                                                 <p class="noti-details"><span class="noti-title">John Hendry</span> sent a cancellation request <span class="noti-title">Apple iPhone XR</span></p>
@@ -123,7 +146,7 @@
                                     <a href="#">
                                         <div class="media d-flex">
                                             <span class="avatar avatar-sm flex-shrink-0">
-                                                <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-13.jpg">
+                                                <img class="avatar-img rounded-circle" alt="User Image" src="{{ URL::to('assets/img/profiles/avatar-13.jpg') }}">
                                             </span>
                                             <div class="media-body flex-grow-1">
                                                 <p class="noti-details"><span class="noti-title">Mercury Software Inc</span> added a new product <span class="noti-title">Apple MacBook Pro</span></p>
@@ -150,7 +173,17 @@
                 <li class="nav-item dropdown has-arrow new-user-menus">
                     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">
-                            <img class="rounded-circle" src="/images/{{ Session::get('avatar') }}" width="31"alt="{{ Session::get('name') }}">
+                            @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
+                            <img class="rounded-circle" src="{{ URL::to('images/photo_defaults.jpg') }}" width="31"alt="{{ Session::get('name') }}">
+                            @elseif (Session::get('role_name') === 'Teacher')
+                            <img class="rounded-circle" src="{{ Storage::url('teacher-photos/'.Session::get('avatar')) }}" width="31"alt="{{ Session::get('name') }}">
+                            @elseif (Session::get('role_name') === 'Student')
+
+                            <img class="rounded-circle" src="{{ Storage::url('student-photos/'.Session::get('avatar')) }}" width="31"alt="{{ Session::get('name') }}">
+                            @elseif (Session::get('role_name') === 'Parent')
+
+                            <img class="rounded-circle" src="{{ Storage::url('parent-photos/'.Session::get('avatar')) }}" width="31"alt="{{ Session::get('name') }}">
+                            @endif
                             <div class="user-text">
                                 <h6>{{ Session::get('name') }}</h6>
                                 <p class="text-muted mb-0">{{ Session::get('role_name') }}</p>
@@ -160,14 +193,31 @@
                     <div class="dropdown-menu">
                         <div class="user-header">
                             <div class="avatar avatar-sm">
-                                <img src="/images/{{ Session::get('avatar') }}" alt="{{ Session::get('name') }}" class="avatar-img rounded-circle">
+                                @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
+                                <img src="{{ URL::to('images/photo_defaults.jpg') }}" alt="{{ Session::get('name') }}" class="avatar-img rounded-circle">
+                                @elseif (Session::get('role_name') === 'Teacher')
+                                <img src="{{ Storage::url('teacher-photos/'.Session::get('avatar')) }}" alt="{{ Session::get('name') }}" class="avatar-img rounded-circle">
+                                @elseif (Session::get('role_name') === 'Student')
+                                <img src="{{ Storage::url('student-photos/'.Session::get('avatar')) }}" alt="{{ Session::get('name') }}" class="avatar-img rounded-circle">
+                                @elseif (Session::get('role_name') === 'Parent')
+                                <img src="{{ Storage::url('parent-photos/'.Session::get('avatar')) }}" alt="{{ Session::get('name') }}" class="avatar-img rounded-circle">
+                                @endif
+
                             </div>
                             <div class="user-text">
                                 <h6>{{ Session::get('name') }}</h6>
                                 <p class="text-muted mb-0">{{ Session::get('role_name') }}</p>
                             </div>
                         </div>
+                        @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
                         <a class="dropdown-item" href="{{ route('user/profile/page') }}">My Profile</a>
+                        @elseif (Session::get('role_name') === 'Teacher')
+                        <a class="dropdown-item" href="{{ route('teacher/profile/page') }}">My Profile</a>
+                        @elseif (Session::get('role_name') === 'Student')
+                        <a class="dropdown-item" href="{{ route('student/profile/page') }}">My Profile</a>
+                        @elseif (Session::get('role_name') === 'Parent')
+                        <a class="dropdown-item" href="{{ route('parent/profile/page') }}">My Profile</a>
+                        @endif
                         <a class="dropdown-item" href="inbox.html">Inbox</a>
                         <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                     </div>

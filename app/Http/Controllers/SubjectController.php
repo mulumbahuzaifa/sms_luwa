@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassSubjectModel;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Subject;
@@ -134,4 +136,12 @@ class SubjectController extends Controller
             return redirect()->back();
         }
     }
+
+    //Students Part
+    public function mySubjects(){
+        // $subjects = Subject::orderBy('id', 'desc')->paginate(12);
+        $data['subjects'] = ClassSubjectModel::MySubjects(Auth::user()->class_id);
+        return view('student.my_subjects', $data);
+    }
+
 }
