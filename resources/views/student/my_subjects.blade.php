@@ -11,19 +11,17 @@
                 <div class="col">
                     <h3 class="page-title">My Subjects</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('student/dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Subjects</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="card card-table">
                     <div class="card-body">
-
                         <div class="page-header">
                             <div class="row align-items-center">
                                 <div class="col">
@@ -39,30 +37,22 @@
                         </div>
 
                         <table
-                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                            class="table border-0 star-student table-hover table-center mb-0  table-striped">
                             <thead class="student-thread">
                                 <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </th>
+
                                     <th>Subject Name</th>
                                     <th>Code</th>
                                     <th>Level</th>
                                     <th>Compulsory</th>
                                     {{-- <th>Class</th> --}}
-                                    <th class="text-end">Action</th>
+                                    {{-- <th class="text-end">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($subjects as $subject)
                                 <tr>
-                                    <td>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </td>
+
                                     <td>{{ $subject->subject_name }}</td>
                                     <td>
                                         <h2>
@@ -78,7 +68,7 @@
                                         @endif
                                     </td>
                                     {{-- <td>{{ $subject->class->name }}</td> --}}
-                                    <td class="text-end">
+                                    {{-- <td class="text-end">
                                         <form action="{{ route('subject.delete', $subject->id) }}" method="POST">
                                             <div class="actions">
                                                 <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
@@ -88,19 +78,18 @@
                                                     <i class="feather-edit"></i>
                                                 </a>
                                                 @csrf
-                                                {{-- @method('DELETE') --}}
                                                 <button  type="submit" class="btn btn-sm btn-danger" >
                                                     <i class="feather-trash-2 me-1"></i>
                                                 </button>
                                             </div>
                                         </form>
 
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{!! $subjects->links()!!}}
+                        {!! $subjects->links()!!}
                     </div>
                 </div>
             </div>

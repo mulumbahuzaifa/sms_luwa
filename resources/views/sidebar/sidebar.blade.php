@@ -114,14 +114,26 @@
                         <li><a href="{{ route('class_timetable.list') }}" class="{{set_active(['admin/class_timetable/list'])}}">Class Timetables</a></li>
                     </ul>
                 </li>
-                <li class="submenu  {{set_active(['examinations/list/page'])}}">
-                    <a href="#"><i class="fas fa-book-reader"></i>
+                <li class="submenu  {{set_active(['examinations/list/page', 'examinations/schedule/page', 'examinations/marks_register'])}}">
+                    <a href="#"><i class="fas fa-clipboard-list"></i>
                         <span> Examination</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
                         <li><a href="{{ route('exam.list') }}" class="{{set_active(['examinations/list/page'])}}">Exam List</a></li>
-                        <li><a href="{{ route('exam.list') }}" class="{{set_active(['examinations/list/page'])}}">Exam Schedule</a></li>
+                        <li><a href="{{ route('exam.schedule') }}" class="{{set_active(['examinations/schedule/page'])}}">Exam Schedule</a></li>
+                        <li><a href="{{ route('exam.marks_register') }}" class="{{set_active(['examinations/marks_register'])}}">Marks Register</a></li>
+                        <li><a href="{{ route('exam.marks_grade') }}" class="{{set_active(['examinations/marks_grade'])}}">Marks Grade</a></li>
+                    </ul>
+                </li>
+                <li class="submenu  {{set_active(['attendance/students', 'attendance/report'])}}">
+                    <a href="#"><i class="fas fa-table"></i>
+                        <span> Attendance</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('attendance.students') }}" class="{{set_active(['attendance/students'])}}">Students Attendance</a></li>
+                        <li><a href="{{ route('attendance.report') }}" class="{{set_active(['attendance/report'])}}">Attendance Report</a></li>
                     </ul>
                 </li>
 
@@ -142,14 +154,43 @@
                 @endif
 
                 @if (Session::get('role_name') === 'Student')
-                    <li class="submenu {{set_active(['student/my_subjects','student/timetable'])}}">
+                    <li class="submenu {{set_active(['student/my_subjects','student/timetable','student/exam_timetable'])}}">
                         <a href="#"><i class="fas fa-book-reader"></i>
                             <span>Academics</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul>
                             <li><a href="{{ route('subject.student') }}" class="{{set_active(['student/my_subjects'])}}">My Subjects</a></li>
-                            <li><a href="{{ route('student.timetable') }}" class="{{set_active(['student/timetable'])}}">My Timetable</a></li>
+                            <li><a href="{{ route('student.timetable') }}" class="{{set_active(['student/timetable'])}}">Class Timetable</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu  {{set_active(['student/exam_timetable', 'student/my_exam_result'])}}">
+                        <a href="#"><i class="fas fa-clipboard-list"></i>
+                            <span> Examination</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="{{ route('student.exam_timetable') }}" class="{{set_active(['student/exam_timetable'])}}">Exam Timetable</a></li>
+                            <li><a href="{{ route('student.my_exam_result') }}" class="{{set_active(['student/my_exam_result'])}}">Exam Result</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu  {{set_active(['student/my_calender'])}}">
+                        <a href="#"><i class="fas fa-book-reader"></i>
+                            <span> My Calender</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="{{ route('student/my_calender') }}" class="{{set_active(['student/my_calender'])}}">My Calender</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu  {{set_active(['student/my_attendance'])}}">
+                        <a href="#"><i class="fas fa-table"></i>
+                            <span>Attendance</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul>
+                            <li><a href="{{ route('student/my_attendance') }}" class="{{set_active(['student/my_attendance'])}}">My Attendance</a></li>
                         </ul>
                     </li>
 
@@ -174,10 +215,42 @@
                         <li><a href="{{ route('teacher/my_students') }}"  class="{{set_active(['student/list'])}}">Student List</a></li>
                     </ul>
                 </li>
+
+                <li class="submenu  {{set_active(['teacher/my_calender'])}}">
+                    <a href="#"><i class="fas fa-book-reader"></i>
+                        <span> My Calender</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('teacher/my_calender') }}" class="{{set_active(['teacher/my_calender'])}}">My Calender</a></li>
+                    </ul>
+                </li>
+                <li class="submenu {{set_active(['teacher/my_exam_timetable','teacher/marks_register'])}}">
+                    <a href="#"><i class="fas fa-graduation-cap"></i>
+                        <span>Exams</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('teacher/my_exam_timetable') }}"  class="{{set_active(['teacher/my_exam_timetable'])}}">Exams Timetable</a></li>
+                        <li><a href="{{ route('teacher.marks_register') }}" class="{{set_active(['teacher/marks_register'])}}">Marks Register</a></li>
+                    </ul>
+                </li>
+                <li class="submenu  {{set_active(['teacher/attendance/students', 'teacher/attendance/report'])}}">
+                    <a href="#"><i class="fas fa-table"></i>
+                        <span> Attendance</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('teacher.attendanceStudents') }}" class="{{set_active(['teacher/attendance/students'])}}">Students Attendance</a></li>
+                        <li><a href="{{ route('teacher.attendanceReport') }}" class="{{set_active(['teacher/attendance/report'])}}">Attendance Report</a></li>
+                    </ul>
+                </li>
                 @endif
+
                 <li class="menu-title">
                     <span>Management</span>
                 </li>
+                @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
                 <li class="submenu">
                     <a href="#"><i class="fas fa-file-invoice-dollar"></i>
                         <span> Accounts</span>
@@ -192,15 +265,14 @@
                         <li><a href="add-salary.html">Add Salary</a></li>
                     </ul>
                 </li>
+                @endif
                 <li>
                     <a href="holiday.html"><i class="fas fa-holly-berry"></i> <span>Holiday</span></a>
                 </li>
                 <li>
                     <a href="fees.html"><i class="fas fa-comment-dollar"></i> <span>Fees</span></a>
                 </li>
-                <li>
-                    <a href="exam.html"><i class="fas fa-clipboard-list"></i> <span>Exam list</span></a>
-                </li>
+
                 <li>
                     <a href="event.html"><i class="fas fa-calendar-day"></i> <span>Events</span></a>
                 </li>

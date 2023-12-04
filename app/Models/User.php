@@ -105,6 +105,14 @@ class User extends Authenticatable
         return $return;
 
     }
+    static public function getStudentClass($class_id){
+        return self::select('users.id', 'users.name', 'users.last_name')
+            ->where('users.role_name', '=', 'Student')
+            ->where('users.class_id', '=', $class_id)
+            ->orderBy('users.id', 'desc')
+            ->get();
+
+    }
 
     static public function listTeacher(){
         $return = self::select('users.*')
@@ -137,6 +145,17 @@ class User extends Authenticatable
     static public function getTeacher(){
         $return = self::select('users.*')
             ->where('users.role_name', '=', 'Teacher')
+            ->where('is_deleted', '=', 0);
+
+        $return = $return->orderBy('users.id', 'desc')
+            ->get();
+
+        return $return;
+
+    }
+    static public function getStudents(){
+        $return = self::select('users.*')
+            ->where('users.role_name', '=', 'Student')
             ->where('is_deleted', '=', 0);
 
         $return = $return->orderBy('users.id', 'desc')
@@ -248,5 +267,9 @@ class User extends Authenticatable
 
         return $return;
 
+    }
+
+    static public function getAttendance($student_id, $class_id,$attendance_date){
+        return StudentAttendanceModel::CheckAlreadyAttendance($student_id, $class_id,$attendance_date);
     }
 }

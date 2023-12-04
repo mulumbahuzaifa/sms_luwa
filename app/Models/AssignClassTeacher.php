@@ -60,6 +60,31 @@ class AssignClassTeacher extends Model
 
     }
 
+    static public function getMyClassSubjectGroup($teacher_id){
+        return AssignClassTeacher::select('assign_class_teacher.*', 'sm_classes.name as class_name', 'sm_classes.id as class_id')
+            ->join('sm_classes', 'sm_classes.id', '=', 'assign_class_teacher.class_id')
+            ->where('assign_class_teacher.is_deleted', '=', 0)
+            ->where('assign_class_teacher.status', '=', 0)
+            ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
+            ->groupBy('assign_class_teacher.class_id')
+            ->get();
+
+    }
+    static public function getMyCalendarTeacher($teacher_id){
+        return AssignClassTeacher::select('class_subject_timetable.*', 'sm_classes.name as class_name', 'sm_classes.id as class_id'
+        , 'subjects.name as subject_name', 'week.name as week_name', 'week.fullcalendar_day')
+            ->join('sm_classes', 'sm_classes.id', '=', 'assign_class_teacher.class_id')
+            ->join('class_subject', 'class_subject.class_id', '=', 'assign_class_teacher.class_id')
+            ->join('class_subject_timetable', 'class_subject_timetable.subject_id', '=', 'class_subject.subject_id')
+            ->join('subjects', 'subjects.id', '=', 'class_subject_timetable.subject_id')
+            ->join('week', 'week.id', '=', 'class_subject_timetable.week_id')
+            ->where('assign_class_teacher.is_deleted', '=', 0)
+            ->where('assign_class_teacher.status', '=', 0)
+            ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
+            ->get();
+
+    }
+
     static public function getAssignTeacherID($class_id){
         $return = self::where('class_id','=', $class_id)->where('is_deleted','=', 0)->get();
         return $return;

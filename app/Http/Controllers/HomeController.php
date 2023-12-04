@@ -12,6 +12,7 @@ use Auth;
 use DB;
 use Hash;
 use Brian2694\Toastr\Facades\Toastr;
+Use Charts;
 
 class HomeController extends Controller
 {
@@ -33,11 +34,22 @@ class HomeController extends Controller
     /** home dashboard */
     public function index()
     {
-        $numberOfStudents = Student::count();
-        $numberOfTeachers = Teacher::count();
+        $numberOfStudents = User::getStudents()->count();
+        $numberOfTeachers = User::getTeacher()->count();
         $numberOfDepartments = Department::count();
         $numberOfClasses = SmClass::count();
-        return view('dashboard.home', compact('numberOfStudents', 'numberOfTeachers', 'numberOfDepartments', 'numberOfClasses'));
+
+        $users = User::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
+                    ->whereYear('created_at', date('Y'))
+                    ->groupBy(DB::raw("Month(created_at)"))
+                    ->pluck('count', 'month_name');
+
+        $labels = $users->keys();
+        $data = $users->values();
+
+        // dd($labels, $data);
+
+        return view('dashboard.home', compact('numberOfStudents', 'numberOfTeachers', 'numberOfDepartments', 'numberOfClasses', 'labels', 'data',));
     }
 
     /** profile user */
@@ -173,5 +185,68 @@ class HomeController extends Controller
     {
         $data['parent'] = User::getSingle(Auth::User()->id);
         return view('dashboard.parent_dashboard', $data);
+    }
+
+    public function makeChart($type)
+    {
+        switch ($type) {
+            case 'bar':
+            $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
+            ->get();
+            $chart = Charts::database($users, 'bar', 'highcharts')
+            ->title("Monthly new Register Users")
+            ->elementLabel("Total Users")
+            ->dimensions(1000, 500)
+            ->responsive(true)
+            ->groupByMonth(date('Y'), true);
+            break;
+            case 'pie':
+            $chart = Charts::create('pie', 'highcharts')
+            ->title('HDTuto.com Laravel Pie Chart')
+            ->labels(['Codeigniter', 'Laravel', 'PHP'])
+            ->values([5,10,20])
+            ->dimensions(1000,500)
+            ->responsive(true);
+            break;
+            case 'donut':
+            $chart = Charts::create('donut', 'highcharts')
+            ->title('HDTuto.com Laravel Donut Chart')
+            ->labels(['First', 'Second', 'Third'])
+            ->values([5,10,20])
+            ->dimensions(1000,500)
+            ->responsive(true);
+            break;
+            case 'line':
+            $chart = Charts::create('line', 'highcharts')
+            ->title('HDTuto.com Laravel Line Chart')
+            ->elementLabel('HDTuto.com Laravel Line Chart Lable')
+            ->labels(['First', 'Second', 'Third'])
+            ->values([5,10,20])
+            ->dimensions(1000,500)
+            ->responsive(true);
+            break;
+            case 'area':
+            $chart = Charts::create('area', 'highcharts')
+            ->title('HDTuto.com Laravel Area Chart')
+            ->elementLabel('HDTuto.com Laravel Line Chart label')
+            ->labels(['First', 'Second', 'Third'])
+            ->values([5,10,20])
+            ->dimensions(1000,500)
+            ->responsive(true);
+            break;
+            case 'geo':
+            $chart = Charts::create('geo', 'highcharts')
+            ->title('HDTuto.com Laravel GEO Chart')
+            ->elementLabel('HDTuto.com Laravel GEO Chart label')
+            ->labels(['ES', 'FR', 'RU'])
+            ->colors(['#3D3D3D', '#985689'])
+            ->values([5,10,20])
+            ->dimensions(1000,500)
+            ->responsive(true);
+            break;
+            default:
+            break;
+        }
+        return view('chart', compact('chart'));
     }
 }

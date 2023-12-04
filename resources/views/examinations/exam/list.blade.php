@@ -53,63 +53,64 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="table-responsive">
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0  table-striped">
+                                <thead class="student-thread">
+                                    <tr>
+                                        <th>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </th>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Note</th>
+                                        <th>Created By</th>
+                                        <th>Created-Date</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($getRecord as $value)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $value->name }}</td>
+                                        <td>{{ $value->note }}</td>
+                                        <td>{{ $value->created_by}}</td>
+                                        <td>{{ date('d-m-Y H:i A',  strtotime($value->created_at)) }}</td>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
+                                                    <i class="feather-eye"></i>
+                                                </a>
+                                                <a href="{{ route('exam.edit', $value->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <i class="feather-edit"></i>
+                                                </a>
+                                                <form action="{{ route('exam.delete', $value->id) }}" method="POST">
 
-                        <table
-                            class="table border-0 star-student table-hover table-center mb-0  table-striped">
-                            <thead class="student-thread">
-                                <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </th>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Note</th>
-                                    <th>Created By</th>
-                                    <th>Created-Date</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($getRecord as $value)
-                                <tr>
-                                    <td>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </td>
-                                    <td>{{ $i++ }}</td>
-                                    <td>{{ $value->name }}</td>
-                                    <td>{{ $value->note }}</td>
-                                    <td>{{ $value->created_by}}</td>
-                                    <td>{{ date('d-m-Y H:i A',  strtotime($value->created_at)) }}</td>
-                                    <td class="text-end">
-                                        <div class="actions">
-                                            <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
-                                                <i class="feather-eye"></i>
-                                            </a>
-                                            <a href="{{ route('exam.edit', $value->id) }}" class="btn btn-sm bg-danger-light">
-                                                <i class="feather-edit"></i>
-                                            </a>
-                                            <form action="{{ route('exam.delete', $value->id) }}" method="POST">
-
-                                                @csrf
-                                                {{-- @method('DELETE') --}}
-                                                <button  type="submit" class="btn btn-sm btn-danger" >
-                                                    <i class="feather-trash-2 me-1"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {!! $getRecord->appends(request()->input())->links() !!}
+                                                    @csrf
+                                                    {{-- @method('DELETE') --}}
+                                                    <button  type="submit" class="btn btn-sm btn-danger" >
+                                                        <i class="feather-trash-2 me-1"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {!! $getRecord->appends(request()->input())->links() !!}
+                        </div>
                     </div>
                 </div>
             </div>

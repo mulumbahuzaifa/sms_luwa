@@ -102,6 +102,7 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <canvas id="myChart" height="150px"></canvas>
                         <div id="apexcharts-area"></div>
                     </div>
                 </div>
@@ -354,4 +355,69 @@
         </div> --}}
     </div>
 </div>
+@endsection
+@section('script')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script type="text/javascript">
+
+      var labels =  {{ Js::from($labels) }};
+      var users =  {{ Js::from($data) }};
+
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: users,
+        }]
+      };
+
+      const config = {
+        type: 'line',
+        data: data,
+        options: {}
+      };
+
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+
+</script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+    if ($("#apexcharts-area-chart").length > 0) {
+        var options = {
+            chart: { height: 350, type: "line", toolbar: { show: false } },
+            dataLabels: { enabled: false },
+            stroke: { curve: "smooth" },
+            series: [
+                {
+                    name: "Teachers",
+                    color: "#3D5EE1",
+                    data: [45, 60, 75, 51, 42, 42, 30],
+                },
+                {
+                    name: "Students",
+                    color: "#70C4CF",
+                    data: [24, 48, 56, 32, 34, 52, 25],
+                },
+            ],
+            xaxis: {
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+            },
+        };
+        var chart = new ApexCharts(
+            document.querySelector("#apexcharts-area-chart"),
+            options
+        );
+        chart.render();
+    }
+});
+
+</script>
+
 @endsection

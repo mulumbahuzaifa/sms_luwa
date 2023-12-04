@@ -96,6 +96,7 @@ class ClassTimetableController extends Controller
             $week = array();
             foreach( $getWeek as $valueW){
                 $dataW = array();
+                $dataW['week_id'] = $valueW->id;
                 $dataW['week_name'] = $valueW->name;
 
                 $ClassSubject  = ClassSubjectTimetableModel::getRecordClassSubject($value->class_id, $value->subject_id, $valueW->id);

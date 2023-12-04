@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AssignClassTeacherController;
+use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\ClassSubjectController;
 use App\Http\Controllers\ClassTimetableController;
 use App\Http\Controllers\ResetPasswordController;
@@ -46,13 +48,13 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth'],function()
 {
-    Route::group(['middleware'=>'admin'],function()
-    {
-        Route::get('home',function()
-        {
-            return view('home');
-        });
-    });
+    // Route::group(['middleware'=>'admin'],function()
+    // {
+    //     Route::get('home',function()
+    //     {
+    //         return view('home');
+    //     });
+    // });
 
 });
     Route::group(['middleware'=>'teacher'],function()
@@ -72,9 +74,30 @@ Route::group(['middleware'=>'auth'],function()
             Route::get('teacher/my_class_subjects/class_timetable/{class_id}/{subject_id}', 'MyTimetableTeacher')->name('teacherClassSubjectTimetable'); // My Class Subject Timetable
 
         });
+
+        // ----------------------- Examination -----------------------------//
+        Route::controller(ExaminationController::class)->group(function () {
+
+            Route::get('teacher/my_exam_timetable', 'MyExamTimetableTeacher')->name('teacher/my_exam_timetable'); // My Class Subject Timetable
+            Route::get('teacher/marks_register', 'TeacherMarksRegister')->middleware('auth')->name('teacher.marks_register'); // staff/list/page
+            Route::post('teacher/submit_marks_register', 'submitMarksRegister')->middleware('auth')->name('teacher.submit_marks_register'); // staff/list/page
+            Route::post('teacher/single_submit_marks_register', 'singleSubmitMarksRegister')->middleware('auth')->name('teacher.single_submit_marks_register'); // staff/list/page
+
+        });
+
+        Route::controller(CalenderController::class)->group(function () {
+            Route::get('teacher/my_calender', 'MyCalenderTeacher')->name('teacher/my_calender'); // list student
+        });
         // ------------------------ student -------------------------------//
         Route::controller(StudentController::class)->group(function () {
             Route::get('teacher/my_students', 'MyStudents')->name('teacher/my_students'); // list student
+
+        });
+        //Attendance class
+        Route::controller(AttendanceController::class)->group(function () {
+            Route::get('teacher/attendance/students', 'AttendanceStudentsTeacher')->middleware('auth')->name('teacher.attendanceStudents'); // class/list/page
+            Route::post('teacher/attendance/students/save', 'AttendanceStudentsSubmit')->middleware('auth')->name('teacher.attendance.students.save'); // class/list/page
+            Route::get('teacher/attendance/report', 'AttendanceReportTeacher')->middleware('auth')->name('teacher.attendanceReport'); // class/list/page
 
         });
 
@@ -90,6 +113,22 @@ Route::group(['middleware'=>'student'],function()
     Route::controller(ClassTimetableController::class)->group(function () {
         Route::get('student/timetable', 'MyTimetable')->name('student.timetable'); // list student
     });
+
+    Route::controller(ExaminationController::class)->group(function () {
+        Route::get('student/exam_timetable', 'MyExamTimetable')->name('student.exam_timetable'); // list student
+        Route::get('student/my_exam_result', 'MyExamResults')->middleware('auth')->name('student.my_exam_result'); // staff/list/page
+    });
+
+    Route::controller(CalenderController::class)->group(function () {
+        Route::get('student/my_calender', 'MyCalender')->name('student/my_calender'); // list student
+    });
+
+    //Attendance class
+    Route::controller(AttendanceController::class)->group(function () {
+    Route::get('student/my_attendance', 'MyAttendanceStudent')->name('student/my_attendance'); // class/list/page
+
+    });
+
 
 });
 
@@ -267,6 +306,14 @@ Route::controller(ClassTimetableController::class)->group(function () {
     // Route::post('admin/assign_class_teacher/delete/{id}', 'delete')->name('assign_class_teacher.delete');
 });
 
+//Attendance class
+Route::controller(AttendanceController::class)->group(function () {
+    Route::get('attendance/students', 'AttendanceStudents')->middleware('auth')->name('attendance.students'); // class/list/page
+    Route::post('attendance/students/save', 'AttendanceStudentsSubmit')->middleware('auth')->name('attendance.students.save'); // class/list/page
+    Route::get('attendance/report', 'AttendanceReport')->middleware('auth')->name('attendance.report'); // class/list/page
+
+});
+
 // ----------------------- Examination -----------------------------//
 Route::controller(ExaminationController::class)->group(function () {
     Route::get('examination/list/page', 'examList')->middleware('auth')->name('exam.list'); // staff/list/page
@@ -275,5 +322,20 @@ Route::controller(ExaminationController::class)->group(function () {
     Route::get('examination/edit/{id}', 'editExam')->middleware('auth')->name('exam.edit'); // view for edit
     Route::post('examination/update/{id}', 'examUpdate')->middleware('auth')->name('exam.update'); // update record department
     Route::post('examination/delete/{id}', 'examDelete')->middleware('auth')->name('exam.delete');
+
+    Route::get('examination/schedule/page', 'examSchedule')->middleware('auth')->name('exam.schedule'); // staff/list/page
+    Route::post('examination/schedule/save', 'saveExamSchedule')->middleware('auth')->name('examSchedule.save'); // save record staff
+
+    Route::get('examinations/marks_register', 'marksRegister')->middleware('auth')->name('exam.marks_register'); // staff/list/page
+    Route::post('examinations/submit_marks_register', 'submitMarksRegister')->middleware('auth')->name('exam.submit_marks_register'); // staff/list/page
+    Route::post('examinations/single_submit_marks_register', 'singleSubmitMarksRegister')->middleware('auth')->name('exam.single_submit_marks_register'); // staff/list/page
+
+    Route::get('examinations/marks_grade', 'marksGrade')->middleware('auth')->name('exam.marks_grade'); // staff/list/page
+    Route::get('examinations/submit_marks_grade', 'submitMarksGrade')->middleware('auth')->name('exam.submit_marks_grade'); // staff/list/page
+    Route::post('examinations/submit_marks_grade/save', 'saveMarksGrade')->middleware('auth')->name('exam.submit_marks_grade_save'); // staff/list/page
+    Route::get('examination/marks_grade/edit/{id}', 'marksGradeEdit')->middleware('auth')->name('marks_grade.edit'); // view for edit
+    Route::post('examination/marks_grade/update/{id}', 'marksGradeUpdate')->middleware('auth')->name('marksGrade.update'); // update record department
+    Route::post('examination/marks_grade/delete/{id}', 'marksGradeDelete')->middleware('auth')->name('marksGrade.delete');
+
 });
 

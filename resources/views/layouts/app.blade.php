@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
 	<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
+    @yield('styles')
 </head>
 
 <body>
@@ -31,7 +32,7 @@
             <div class="container">
                 <div class="loginbox">
                     <div class="login-left">
-                        <img class="img-fluid" src="{{ URL::to('assets/img/login.png') }}" alt="Logo">
+                        <img class="img-fluid" src="{{ URL::to('assets/img/mandela2.png') }}" alt="Logo">
                     </div>
                     @yield('content')
                 </div>

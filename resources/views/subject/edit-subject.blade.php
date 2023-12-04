@@ -58,8 +58,8 @@
                                             <label>Compulsory Status<span class="login-danger">*</span></label>
                                             <select class="form-control select  @error('compulsory') is-invalid @enderror" name="compulsory">
                                                 <option selected disabled>Select Compulsory Status</option>
-                                                <option value="0" {{ $subjectEdit->compulsory == '0' ? "selected" :""}}>NO</option>
-                                                <option value="1" {{ $subjectEdit->compulsory == '1' ? "selected" :""}}>YES</option>
+                                                <option value="0" {{ $subjectEdit->compulsory == '0' ? "selected" :""}}>YES</option>
+                                                <option value="1" {{ $subjectEdit->compulsory == '1' ? "selected" :""}}>NO</option>
                                             </select>
                                             @error('compulsory')
                                                 <span class="invalid-feedback" role="alert">
