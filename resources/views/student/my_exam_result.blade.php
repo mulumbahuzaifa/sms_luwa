@@ -23,14 +23,11 @@
 
             <div class="col-sm-12">
                 <div class="card card-table">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ $value['exam_name'] }}</h3>
+                        <a class="btn btn-primary btn-sm" style="float: right;" target="_blank" href="{{ url('student/my_exam_result/print?exam_id='.$value['exam_id'].'&student_id='.Auth::user()->id) }}">Print</a>
+                    </div>
                     <div class="card-body">
-                        <div class="page-header">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h3 class="page-title">{{ $value['exam_name'] }}</h3>
-                                </div>
-                            </div>
-                        </div>
                         <div class="table-responsive">
                             <table
                                 class="table border-0 star-student table-hover table-center mb-0  table-striped">

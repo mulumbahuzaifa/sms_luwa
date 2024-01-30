@@ -29,7 +29,11 @@ class SmClass extends Model
     }
 
     static public function getClass(){
-        $return = SmClass::orderBy('class_code', 'desc')->get();
+        $return = SmClass::select('sm_classes.*')
+            ->where('sm_classes.is_deleted', '=', 0)
+            ->where('sm_classes.status', '=', 0)
+            ->orderBy('sm_classes.class_code', 'desc')
+            ->paginate(20);
         return $return;
     }
 
@@ -46,6 +50,6 @@ class SmClass extends Model
 
     public function classTeacher()
     {
-        return $this->belongsTo(Staff::class, 'class_teacher_id'); // Assuming you have a Teacher model
+        return $this->belongsTo(User::class, 'class_teacher_id'); // Assuming you have a Teacher model
     }
 }

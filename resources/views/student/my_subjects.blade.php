@@ -35,61 +35,62 @@
                                 </div> --}}
                             </div>
                         </div>
+                        <div class="table-responsive">
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0  table-striped">
+                                <thead class="student-thread">
+                                    <tr>
 
-                        <table
-                            class="table border-0 star-student table-hover table-center mb-0  table-striped">
-                            <thead class="student-thread">
-                                <tr>
+                                        <th>Subject Name</th>
+                                        <th>Code</th>
+                                        <th>Level</th>
+                                        <th>Compulsory</th>
+                                        {{-- <th>Class</th> --}}
+                                        {{-- <th class="text-end">Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($subjects as $subject)
+                                    <tr>
 
-                                    <th>Subject Name</th>
-                                    <th>Code</th>
-                                    <th>Level</th>
-                                    <th>Compulsory</th>
-                                    {{-- <th>Class</th> --}}
-                                    {{-- <th class="text-end">Action</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($subjects as $subject)
-                                <tr>
+                                        <td>{{ $subject->subject_name }}</td>
+                                        <td>
+                                            <h2>
+                                                <a>{{ $subject->subject_code }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $subject->subject_level }}</td>
+                                        <td>
+                                            @if($subject->subject_compulsory == 0)
+                                            Compulsory
+                                            @else
+                                            Optional
+                                            @endif
+                                        </td>
+                                        {{-- <td>{{ $subject->class->name }}</td> --}}
+                                        {{-- <td class="text-end">
+                                            <form action="{{ route('subject.delete', $subject->id) }}" method="POST">
+                                                <div class="actions">
+                                                    <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('subject.edit', $subject->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    <button  type="submit" class="btn btn-sm btn-danger" >
+                                                        <i class="feather-trash-2 me-1"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
 
-                                    <td>{{ $subject->subject_name }}</td>
-                                    <td>
-                                        <h2>
-                                            <a>{{ $subject->subject_code }}</a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $subject->subject_level }}</td>
-                                    <td>
-                                        @if($subject->subject_compulsory == 0)
-                                        Compulsory
-                                        @else
-                                        Optional
-                                        @endif
-                                    </td>
-                                    {{-- <td>{{ $subject->class->name }}</td> --}}
-                                    {{-- <td class="text-end">
-                                        <form action="{{ route('subject.delete', $subject->id) }}" method="POST">
-                                            <div class="actions">
-                                                <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
-                                                    <i class="feather-eye"></i>
-                                                </a>
-                                                <a href="{{ route('subject.edit', $subject->id) }}" class="btn btn-sm bg-danger-light">
-                                                    <i class="feather-edit"></i>
-                                                </a>
-                                                @csrf
-                                                <button  type="submit" class="btn btn-sm btn-danger" >
-                                                    <i class="feather-trash-2 me-1"></i>
-                                                </button>
-                                            </div>
-                                        </form>
-
-                                    </td> --}}
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {!! $subjects->links()!!}
+                                        </td> --}}
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {!! $subjects->links()!!}
+                        </div>
                     </div>
                 </div>
             </div>

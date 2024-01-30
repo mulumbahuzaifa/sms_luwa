@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\SmClass;
 use App\Models\Staff;
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -16,7 +17,7 @@ class SmClassController extends Controller
     /** Class list */
     public function classList()
     {
-        $smClasses = SmClass::orderBy('class_code', 'desc')->paginate(12);
+        $smClasses = SmClass::getRecord();
         return view('smclass.list-smclass', ['smClasses' => $smClasses]);
     }
 
@@ -24,7 +25,7 @@ class SmClassController extends Controller
    public function addClass()
    {
        $departments = Department::all();
-       $teachers = Staff::all();
+       $teachers = User::listTeacher();
        return view('smclass.add-smclass', ['departments' => $departments, 'teachers' => $teachers]);
    }
 
@@ -46,6 +47,7 @@ class SmClassController extends Controller
             $smClass->name = $request->name;
             $smClass->level = $request->level;
             $smClass->class_code = $request->class_code;
+            $smClass->amount = $request->amount;
             $smClass->year = $request->year;
             $smClass->class_teacher_id = $request->class_teacher_id;
 
@@ -54,7 +56,7 @@ class SmClassController extends Controller
             Toastr::success('Class has been added successfully.', 'Success');
             DB::commit();
 
-            return redirect()->back();
+            return redirect()->route('class.list');
         } catch(\Exception $e) {
             DB::rollback();
             Toastr::error('Failed to add new Class.', 'Error');
@@ -65,7 +67,7 @@ class SmClassController extends Controller
     public function editSmClass($id)
     {
         $smClassEdit = SmClass::where('id',$id)->first();
-        $teachers = Staff::all();
+        $teachers = User::listTeacher();
         return view('smclass.edit-smclass', ['teachers' => $teachers, 'smClassEdit' => $smClassEdit]);
     }
 
@@ -91,6 +93,7 @@ class SmClassController extends Controller
         $smClass->name = $request->input('name');
         $smClass->level = $request->input('level');
         $smClass->class_code = $request->input('class_code');
+        $smClass->amount = $request->input('amount');
         $smClass->year = $request->input('year');
         $smClass->class_teacher_id = $request->input('class_teacher_id');
 
@@ -98,7 +101,7 @@ class SmClassController extends Controller
         // Save the updated smClass
         $smClass->save();
         Toastr::success('Has been update successfully :)','Success');
-        return redirect()->back();
+        return redirect()->route('class.list');
 
     }
 

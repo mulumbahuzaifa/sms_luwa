@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Admin Dashboard</title>
+    <title>E-SHULE SCHOOL MANAGEMENT SYSTEM</title>
     <link rel="shortcut icon" href="{{ URL::to('assets/img/favicon.png') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/feather/feather.css') }}">
@@ -14,9 +14,31 @@
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/simple-calendar/simple-calendar.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/datatables/datatables.min.css') }}">
+    <!-- daterange picker -->
+  <link rel="stylesheet" href="{{ URL::to('assets/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{{ URL::to('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{{ URL::to('assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{{ URL::to('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <!-- Select2 -->
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::to('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="{{ URL::to('assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="{{ URL::to('assets/plugins/bs-stepper/css/bs-stepper.min.css') }}">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="{{ URL::to('assets/plugins/dropzone/min/dropzone.min.css') }}">
+    <!-- summernote -->
+  <link rel="stylesheet" href="{{ URL::to('assets/plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- Theme style -->
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet"> --}}
 	{{-- message toastr --}}
+    <link rel="stylesheet" href="{{ URL::to('assets/dist/css/adminlte.min.css') }}">
+
 	<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
 	<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
@@ -89,7 +111,7 @@
 
                 <li class="nav-item dropdown noti-dropdown me-2">
                     <a href="#" class="dropdown-toggle nav-link header-nav-list" data-bs-toggle="dropdown">
-                        <img src="assets/img/icons/header-icon-05.svg" alt="">
+                        <img src="{{ asset('assets/img/icons/header-icon-05.svg') }}" alt="">
                     </a>
                     <div class="dropdown-menu notifications">
                         <div class="topnav-dropdown-header">
@@ -102,6 +124,7 @@
                                     <a href="#">
                                         <div class="media d-flex">
                                             <span class="avatar avatar-sm flex-shrink-0">
+                                                {{-- @if (!empty(Auth::user()->avatar)) --}}
                                                 <img class="avatar-img rounded-circle" alt="User Image"
                                                     src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
                                             </span>
@@ -159,14 +182,14 @@
                             </ul>
                         </div>
                         <div class="topnav-dropdown-footer">
-                            <a href="#">View all Notifications</a>
+                            <a href="{{ url('chat') }}">View all Notifications</a>
                         </div>
                     </div>
                 </li>
 
                 <li class="nav-item zoom-screen me-2">
                     <a href="#" class="nav-link header-nav-list win-maximize">
-                        <img src="assets/img/icons/header-icon-04.svg" alt="">
+                        <img src="{{ asset('assets/img/icons/header-icon-04.svg') }}" alt="">
                     </a>
                 </li>
 
@@ -174,15 +197,15 @@
                     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">
                             @if (Session::get('role_name') === 'Admin' || Session::get('role_name') === 'Super Admin')
-                            <img class="rounded-circle" src="{{ URL::to('images/photo_defaults.jpg') }}" width="31"alt="{{ Session::get('name') }}">
+                            <img class="rounded-circle" src="{{ !empty(Session::get('avatar')) ? Storage::url('admin-photos/'.Session::get('avatar')) : URL::to('images/photo_defaults.jpg') }}" width="31"alt="{{ Session::get('name') }}">
                             @elseif (Session::get('role_name') === 'Teacher')
-                            <img class="rounded-circle" src="{{ Storage::url('teacher-photos/'.Session::get('avatar')) }}" width="31"alt="{{ Session::get('name') }}">
+                            <img class="rounded-circle" src="{{ !empty(Session::get('avatar')) ? Storage::url('teacher-photos/'.Session::get('avatar')) : URL::to('images/photo_defaults.jpg') }}" width="31"alt="{{ Session::get('name') }}">
                             @elseif (Session::get('role_name') === 'Student')
 
-                            <img class="rounded-circle" src="{{ Storage::url('student-photos/'.Session::get('avatar')) }}" width="31"alt="{{ Session::get('name') }}">
+                            <img class="rounded-circle" src="{{ !empty(Session::get('avatar')) ? Storage::url('student-photos/'.Session::get('avatar')) : URL::to('images/photo_defaults.jpg') }}" width="31"alt="{{ Session::get('name') }}">
                             @elseif (Session::get('role_name') === 'Parent')
 
-                            <img class="rounded-circle" src="{{ Storage::url('parent-photos/'.Session::get('avatar')) }}" width="31"alt="{{ Session::get('name') }}">
+                            <img class="rounded-circle" src="{{ !empty(Session::get('avatar')) ? Storage::url('parent-photos/'.Session::get('avatar')) : URL::to('images/photo_defaults.jpg') }}" width="31"alt="{{ Session::get('name') }}">
                             @endif
                             <div class="user-text">
                                 <h6>{{ Session::get('name') }}</h6>
@@ -248,7 +271,44 @@
     <script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ URL::to('assets/plugins/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::to('assets/plugins/select2/js/select2.min.js') }}"></script>
+
+    <script src="{{ URL::to('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script src="{{ URL::to('assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
+    <!-- InputMask -->
+    <script src="{{ URL::to('assets/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ URL::to('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+    <!-- date-range-picker -->
+    <script src="{{ URL::to('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <!-- bootstrap color picker -->
+    <script src="{{ URL::to('assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{ URL::to('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+    <!-- Bootstrap Switch -->
+    <script src="{{ URL::to('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+    <!-- BS-Stepper -->
+    <script src="{{ URL::to('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
+    <!-- dropzonejs -->
+    <script src="{{ URL::to('assets/plugins/dropzone/min/dropzone.min.js') }}"></script>
+    <!-- AdminLTE App -->
+
+    <script src="{{ URL::to('assets/dist/js/adminlte.js') }}"></script>
+    <!-- Summernote -->
+    <script src="{{ URL::to('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
     <script src="{{ URL::to('assets/js/script.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script> --}}
 
     @yield('script')
     @stack('scripts')

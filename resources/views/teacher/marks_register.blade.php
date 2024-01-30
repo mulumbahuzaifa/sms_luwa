@@ -178,6 +178,8 @@
                                                     @endforeach
                                                     <td class="text-end">
                                                         <button type="submits" class="btn btn-success">Save</button>
+                                                        <a class="btn btn-outline-secondary" target="_blank" href="{{ url('teacher/my_exam_result/print?exam_id='.Request::get('exam_id').'&student_id='.$student->id) }}">Print</a>
+
                                                         <br />
                                                         @if(!empty($totalStudentMark))
 

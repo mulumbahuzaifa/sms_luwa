@@ -25,8 +25,8 @@
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>All Subjeects</h6>
-                                    <h3>04/06</h3>
+                                    <h6>All Subjects</h6>
+                                    <h3> 10/16</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{ URL::to('assets/img/icons/teacher-icon-01.svg') }}" alt="Dashboard Icon">
@@ -41,7 +41,7 @@
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
                                     <h6>All Projects</h6>
-                                    <h3>40/60</h3>
+                                    <h3>03/06</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{URL::to('assets/img/icons/teacher-icon-02.svg')}}" alt="Dashboard Icon">
@@ -55,8 +55,8 @@
                         <div class="card-body">
                             <div class="db-widgets d-flex justify-content-between align-items-center">
                                 <div class="db-info">
-                                    <h6>Test Done</h6>
-                                    <h3>30/50</h3>
+                                    <h6>Tests Done</h6>
+                                    <h3>05/20</h3>
                                 </div>
                                 <div class="db-icon">
                                     <img src="{{URL::to('assets/img/icons/student-icon-01.svg')}}" alt="Dashboard Icon">
@@ -121,7 +121,7 @@
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Class</h5>
-                                                <h4>Electrical Engg</h4>
+                                                <h4>Senior 4</h4>
                                             </div>
                                         </div>
                                         <div class="lesson-activity">
@@ -130,7 +130,7 @@
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Lessons</h5>
-                                                <h4>5 Lessons</h4>
+                                                <h4>6 Lessons</h4>
                                             </div>
                                         </div>
                                         <div class="lesson-activity">
@@ -138,8 +138,8 @@
                                                 <img src="{{URL::to('assets/img/icons/lesson-icon-03.svg')}}" alt="">
                                             </div>
                                             <div class="views-lesson">
-                                                <h5>Time</h5>
-                                                <h4>Lessons</h4>
+                                                <h5>Current Lesson</h5>
+                                                <h4>Biology</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -160,8 +160,8 @@
                                                 <img src="{{URL::to('assets/img/icons/lesson-icon-05.svg')}}" alt="">
                                             </div>
                                             <div class="views-lesson">
-                                                <h5>Staff</h5>
-                                                <h4>John Doe</h4>
+                                                <h5>Active Teacher</h5>
+                                                <h4>Kasolo Vincent</h4>
                                             </div>
                                         </div>
                                         <div class="lesson-activity">
@@ -170,7 +170,7 @@
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Lesson Learned</h5>
-                                                <h4>10/50</h4>
+                                                <h4>03/06</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -290,34 +290,40 @@
                                     <span><i class="fas fa-ellipsis-h"></i></span>
                                 </div>
                                 <div class="calendar-details">
-                                    <p>08:00 am</p>
+                                    <p>10 Jan</p>
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h4>Sports gala</h4>
+                                            <h5>Join us as we celebtate the 23rd edition of our anual sports gala</h5>
                                         </div>
-                                        <span>08:00 - 09:00 am</span>
+                                        <span>08:00 - 06:00 pm</span>
                                     </div>
                                 </div>
+
                                 <div class="calendar-details">
-                                    <p>09:00 am</p>
+                                    <p>30 Jan</p>
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h4>PTA meeting</h4>
+                                            <h5>Parents/Gurdians,come and be part of our anual general PTA</h5>
                                         </div>
                                         <span>09:00 - 10:00 am</span>
                                     </div>
                                 </div>
+
                                 <div class="calendar-details">
-                                    <p>10:00 am</p>
+                                    <p>20 Feb</p>
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
-                                            <h4>Botony</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h4>MDD competitions</h4>
+                                            <h5>Entertainment season is here and we would love you to be a part of it</h5>
                                         </div>
-                                        <span>10:00 - 11:00 am</span>
+                                        <span>10:00 - 05:00 pm</span>
                                     </div>
+                                </div>
+                                <div class="up-come-header">
+                                    <h2>Upcoming Lessons</h2>
+                                    <span><a href="javascript:;"><i class="feather-plus"></i></a></span>
                                 </div>
                                 <div class="upcome-event-date">
                                     <h3>10 Jan</h3>
@@ -328,7 +334,7 @@
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
                                             <h4>English</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h5>Tebalikomusango Rose</h5>
                                         </div>
                                         <span>08:00 - 09:00 am</span>
                                     </div>
@@ -338,7 +344,7 @@
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
                                             <h4>Mathematics </h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h5>Mary Katende</h5>
                                         </div>
                                         <span>09:00 - 10:00 am</span>
                                     </div>
@@ -348,7 +354,7 @@
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
                                             <h4>History</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h5>Agaba Racheal</h5>
                                         </div>
                                         <span>10:00 - 11:00 am</span>
                                     </div>
@@ -358,7 +364,7 @@
                                     <div class="calendar-box break-bg">
                                         <div class="calandar-event-name">
                                             <h4>Break</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            {{-- <h5></h5> --}}
                                         </div>
                                         <span>11:00 - 12:00 am</span>
                                     </div>
@@ -368,7 +374,7 @@
                                     <div class="calendar-box normal-bg">
                                         <div class="calandar-event-name">
                                             <h4>History</h4>
-                                            <h5>Lorem ipsum sit amet</h5>
+                                            <h5>Kavuma Stuart</h5>
                                         </div>
                                         <span>11:30 - 12:00 am</span>
                                     </div>

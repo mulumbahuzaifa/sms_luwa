@@ -59,6 +59,19 @@ class AssignClassTeacher extends Model
             ->paginate(20);
 
     }
+    static public function getMyClassSubjectCount($teacher_id){
+        return AssignClassTeacher::select('assign_class_teacher.id')
+            ->join('sm_classes', 'sm_classes.id', '=', 'assign_class_teacher.class_id')
+            ->join('class_subject', 'class_subject.class_id', '=', 'sm_classes.id')
+            ->join('subjects', 'subjects.id', '=', 'class_subject.subject_id')
+            ->where('assign_class_teacher.is_deleted', '=', 0)
+            ->where('assign_class_teacher.status', '=', 0)
+            ->where('class_subject.is_deleted', '=', 0)
+            ->where('class_subject.status', '=', 0)
+            ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
+            ->count();
+
+    }
 
     static public function getMyClassSubjectGroup($teacher_id){
         return AssignClassTeacher::select('assign_class_teacher.*', 'sm_classes.name as class_name', 'sm_classes.id as class_id')
@@ -68,6 +81,15 @@ class AssignClassTeacher extends Model
             ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
             ->groupBy('assign_class_teacher.class_id')
             ->get();
+
+    }
+    static public function getTeacherClassCount($teacher_id){
+        return AssignClassTeacher::select('assign_class_teacher.id')
+            ->join('sm_classes', 'sm_classes.id', '=', 'assign_class_teacher.class_id')
+            ->where('assign_class_teacher.is_deleted', '=', 0)
+            ->where('assign_class_teacher.status', '=', 0)
+            ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
+            ->count();
 
     }
     static public function getMyCalendarTeacher($teacher_id){

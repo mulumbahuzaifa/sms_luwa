@@ -5,9 +5,13 @@
 {!! Toastr::message() !!}
 <div class="login-right">
     <div class="login-right-wrap">
-        <h1>Welcome to Mandela S.S Hoima Dashbord</h1>
+        <div class="login-top">
+            <img class="img-fluid" width="50" src="{{ URL::to('assets/img/mandela2.png') }}" alt="Logo">
+        </div>
+        <h1>Mandela S.S Hoima</h1>
+
         <p class="account-subtitle">Need an account? <a href="{{ route('register') }}">Sign Up</a></p>
-        <h2>Sign in</h2>
+        <h2>Eshule Login</h2>
         <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -23,7 +27,7 @@
             <div class="forgotpass">
                 <div class="remember-me">
                     <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Remember me
-                        <input type="checkbox" name="radio">
+                        <input type="checkbox" name="radio remember" >
                         <span class="checkmark"></span>
                     </label>
                 </div>

@@ -123,9 +123,9 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms calendar-icon">
+                                        <div class="form-group local-forms">
                                             <label>Date Of Birth <span class="login-danger">*</span></label>
-                                            <input class="form-control  @error('date_of_birth') is-invalid @enderror" required name="date_of_birth" type="date" placeholder="DD-MM-YYYY" value="{{ old('date_of_birth') }}">
+                                            <input class="form-control  @error('date_of_birth') is-invalid @enderror" type="date" required name="date_of_birth"  placeholder="DD-MM-YYYY" value="{{ old('date_of_birth') }}">
                                             @error('date_of_birth')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -148,6 +148,15 @@
                                         <div class="form-group local-forms">
                                             <label>Religion</label>
                                             <input class="form-control @error('religion') is-invalid @enderror" type="text" name="religion" placeholder="Religion" value="{{ old('religion') }}">
+                                            <select class="form-control select @error('religion') is-invalid @enderror" name="religion">
+                                                <option selected disabled>Please Select Religion </option>
+                                                <option value="Advent" {{ old('religion') == 'Advent' ? "selected" :""}}>Advent</option>
+                                                <option value="Islam" {{ old('religion') == 'Islam' ? "selected" :""}}>Islam</option>
+                                                <option value="Catholic" {{ old('religion') == 'Catholic' ? "selected" :""}}>Catholic</option>
+                                                <option value="Anglican" {{ old('religion') == 'Anglican' ? "selected" :""}}>Anglican</option>
+                                                <option value="Hindu" {{ old('religion') == 'Hindu' ? "selected" :""}}>Hindu</option>
+                                                <option value="Others" {{ old('religion') == 'Others' ? "selected" :""}}>Others</option>
+                                            </select>
                                             @error('religion')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -184,7 +193,9 @@
                                                 <option selected disabled>Please Select Group </option>
                                                 <option value="A+" {{ old('blood_group') == 'A+' ? "selected" :""}}>A+</option>
                                                 <option value="B+" {{ old('blood_group') == 'B+' ? "selected" :""}}>B+</option>
-                                                <option value="O+" {{ old('blood_group') == 'O+' ? "selected" :""}}>O+</option>
+                                                <option value="O" {{ old('blood_group') == 'O' ? "selected" :""}}>O</option>
+                                                <option value="AB" {{ old('blood_group') == 'AB' ? "selected" :""}}>AB</option>
+                                                <option value="AB+" {{ old('blood_group') == 'AB+' ? "selected" :""}}>AB+</option>
                                             </select>
                                             @error('blood_group')
                                                 <span class="invalid-feedback" role="alert">

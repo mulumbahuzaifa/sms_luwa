@@ -71,68 +71,69 @@
                                 </div>
                             </div>
                         </div>
-
-                        <table
-                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
-                            <thead class="student-thread">
-                                <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </th>
-                                    <th>#</th>
-                                    <th>Class Name</th>
-                                    <th>Teacher Name</th>
-                                    <th>Status</th>
-                                    <th>Created By</th>
-                                    <th>Created Date</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($getRecord as $value)
-                                <tr>
-                                    <td>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </td>
-                                    <td>{{ $value->id }}</td>
-                                    <td>{{ $value->class_name }}</td>
-                                    <td>{{ $value->teacher_name }}</td>
-                                    <td>
-                                        @if($value->status == 0)
-                                        Active
-                                        @else
-                                        Inactive
-                                        @endif
-                                    </td>
-                                    <td>{{ $value->created_by_name }}</td>
-                                    <td>{{ date('d-m-Y H:i A',  strtotime($value->created_at)) }}</td>
-                                    <td class="text-end">
-                                        <div class="actions">
-                                            <a href="{{ route('assign_class_teacher.edit_single', $value->id) }};" class="btn btn-sm bg-success-light me-2">
-                                                <i class="feather-eye"></i>
-                                            </a>
-                                            <a href="{{ route('assign_class_teacher.edit', $value->id) }}" class="btn btn-sm bg-danger-light">
-                                                <i class="feather-edit"></i>
-                                            </a>
-                                            <form action="{{ route('assign_class_teacher.delete', $value->id) }}" method="POST">
-                                                @csrf
-                                                {{-- @method('DELETE') --}}
-                                                <button  type="submit" class="btn btn-sm btn-danger" >
-                                                    <i class="feather-trash-2 me-1"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div style="padding: 10px; float: right;">
-                            {!! $getRecord->appends(request()->input())->links() !!}
+                        <div class="table-responsive">
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                <thead class="student-thread">
+                                    <tr>
+                                        <th>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </th>
+                                        <th>#</th>
+                                        <th>Class Name</th>
+                                        <th>Teacher Name</th>
+                                        <th>Status</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($getRecord as $value)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </td>
+                                        <td>{{ $value->id }}</td>
+                                        <td>{{ $value->class_name }}</td>
+                                        <td>{{ $value->teacher_name }}</td>
+                                        <td>
+                                            @if($value->status == 0)
+                                            Active
+                                            @else
+                                            Inactive
+                                            @endif
+                                        </td>
+                                        <td>{{ $value->created_by_name }}</td>
+                                        <td>{{ date('d-m-Y H:i A',  strtotime($value->created_at)) }}</td>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="{{ route('assign_class_teacher.edit_single', $value->id) }};" class="btn btn-sm bg-success-light me-2">
+                                                    <i class="feather-eye"></i>
+                                                </a>
+                                                <a href="{{ route('assign_class_teacher.edit', $value->id) }}" class="btn btn-sm bg-danger-light">
+                                                    <i class="feather-edit"></i>
+                                                </a>
+                                                <form action="{{ route('assign_class_teacher.delete', $value->id) }}" method="POST">
+                                                    @csrf
+                                                    {{-- @method('DELETE') --}}
+                                                    <button  type="submit" class="btn btn-sm btn-danger" >
+                                                        <i class="feather-trash-2 me-1"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div style="padding: 10px; float: right;">
+                                {!! $getRecord->appends(request()->input())->links() !!}
+                            </div>
                         </div>
                     </div>
                 </div>

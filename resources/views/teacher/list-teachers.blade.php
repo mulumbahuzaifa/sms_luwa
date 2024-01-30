@@ -149,7 +149,7 @@
                                                 {{ date('d-m-Y',  strtotime($list->join_date)) }}
                                             @endif
                                         </td>
-                                        <td>{{ $list->mobile }}</td>
+                                        <td>{{ $list->phone_number }}</td>
                                         <td>{{ $list->marital_status }}</td>
                                         <td>{{ $list->current_address }}</td>
                                         <td>{{ $list->address }}</td>

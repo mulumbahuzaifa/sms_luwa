@@ -53,71 +53,73 @@
                                     <h3 class="page-title">Classes</h3>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="#" class="btn btn-outline-primary me-2"><i
+                                    <a href="#" class="btn btn-outline-warning me-2"><i
                                             class="fas fa-download"></i> Download</a>
                                     <a href="{{ route('class.add') }}" class="btn btn-primary"><i
                                             class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
-
-                        <table
-                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
-                            <thead class="student-thread">
-                                <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </th>
-                                    <th>Class-Name</th>
-                                    <th>Class-Code</th>
-                                    <th>Level</th>
-                                    <th>Year</th>
-                                    <th>Class-Teacher</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($smClasses as $smClass)
-                                <tr>
-                                    <td>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </td>
-                                    <td>{{ $smClass->name }}</td>
-                                    <td>
-                                        <h2>
-                                            <a>{{ $smClass->class_code }}</a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $smClass->level }}</td>
-                                    <td>{{ $smClass->year }}</td>
-                                    <td>{{ $smClass->classTeacher->first_name }} {{ $smClass->classTeacher->last_name }}</td>
-                                    <td class="text-end">
-                                        <form action="{{ route('class.delete', $smClass->id) }}" method="POST">
-                                            <div class="actions">
-                                                <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
-                                                    <i class="feather-eye"></i>
-                                                </a>
-                                                <a href="{{ route('class.edit', $smClass->id) }}" class="btn btn-sm bg-danger-light">
-                                                    <i class="feather-edit"></i>
-                                                </a>
-                                                @csrf
-                                                {{-- @method('DELETE') --}}
-                                                <button  type="submit" class="btn btn-sm btn-danger" >
-                                                    <i class="feather-trash-2 me-1"></i>
-                                                </button>
+                        <div class="table-responsive">
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0  table-striped">
+                                <thead class="student-thread">
+                                    <tr>
+                                        <th>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
                                             </div>
-                                        </form>
-
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{!! $smClasses->links()!!}}
+                                        </th>
+                                        <th>Class-Name</th>
+                                        <th>Class-Code</th>
+                                        <th>Level</th>
+                                        <th>Amount (UGx)</th>
+                                        <th>Year</th>
+                                        <th>Class-Teacher</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($smClasses as $smClass)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </td>
+                                        <td>{{ $smClass->name }}</td>
+                                        <td>
+                                            <h2>
+                                                <a>{{ $smClass->class_code }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $smClass->level }}</td>
+                                        <td>UGx {{ number_format($smClass->amount, 2) }}</td>
+                                        <td>{{ $smClass->year }}</td>
+                                        <td>{{ $smClass->classTeacher->name }} {{ $smClass->classTeacher->last_name }}</td>
+                                        <td class="text-end">
+                                            <form action="{{ route('class.delete', $smClass->id) }}" method="POST">
+                                                <div class="actions">
+                                                    <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('class.edit', $smClass->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    {{-- @method('DELETE') --}}
+                                                    <button  type="submit" class="btn btn-sm btn-danger" >
+                                                        <i class="feather-trash-2 me-1"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        {!! $smClasses->links()!!}
+                        </div>
                     </div>
                 </div>
             </div>

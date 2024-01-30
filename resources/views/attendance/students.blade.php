@@ -47,12 +47,19 @@
                                             <input type="date" class="form-control" id="getAttendanceDate" name="attendance_date" required value="{{ Request::get('attendance_date') }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-3">
+                                        <div class="search-student-btn">
+                                            <button type="btn" class="btn btn-outline-primary">Search</button>
+                                            <a href="{{ route('attendance.students') }}" class="btn btn-danger">Reset</a>
+
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-lg-2">
                                         <div class="search-student-btn">
                                             <button type="btn" class="btn btn-secondary">Search</button>
                                             <a href="{{ route('attendance.students') }}" class="btn btn-success">Reset</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </form>

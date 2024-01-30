@@ -9,7 +9,7 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title"> Attendance Report <span style="color: greenyellow;"> (Total : {{ $getRecord->total() }})</span></h3>
+                    <h3 class="page-title"> Attendance Report<span style="color: greenyellow;"> (Total : {{ $getRecord->total() }})</span></h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Attendance Report</li>
@@ -61,9 +61,9 @@
                                         <div class="form-group">
                                             <select name="attendance_type" class="form-control" >
                                                 <option value="">Select Attendance</option>
-                                                    <option {{ (Request::get('attendance_type') == 1) ? 'selected' : '' }} value="1">Present</option>
-                                                    <option {{ (Request::get('attendance_type') == 2) ? 'selected' : '' }} value="2">Late</option>
-                                                    <option {{ (Request::get('attendance_type') == 3) ? 'selected' : '' }} value="3">Absent</option>
+                                                    <option {{ (Request::get('attendance_type') == 1) ? 'selected' : '' }} value="1"><span class="badge bg-success">Present</span></option>
+                                                    <option {{ (Request::get('attendance_type') == 2) ? 'selected' : '' }} value="2"><span class="badge bg-warning">Late</span></option>
+                                                    <option {{ (Request::get('attendance_type') == 3) ? 'selected' : '' }} value="3"><span class="badge bg-danger">Absent</span></option>
                                             </select>
                                         </div>
                                     </div>
@@ -115,11 +115,11 @@
                                             <td>{{ $value->class_name }}</td>
                                             <td>
                                                 @if ($value->attendance_type == 1)
-                                                    Present
+                                                <span class="badge bg-success">Present</span>
                                                 @elseif ($value->attendance_type == 2)
-                                                    Late
+                                                <span class="badge bg-warning">Late</span>
                                                 @elseif ($value->attendance_type == 3)
-                                                    Absent
+                                                <span class="badge bg-danger">Absent</span>
                                                 @endif
                                             </td>
                                             <td>{{ date('d-m-Y ',  strtotime($value->attendance_date)) }}</td>

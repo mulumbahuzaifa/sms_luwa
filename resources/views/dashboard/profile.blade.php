@@ -23,7 +23,7 @@
                         <div class="col-auto profile-image">
                             <a href="#">
                                 @if (!empty(Session::get('avatar')))
-                                <img class="rounded-circle" alt="{{ Session::get('name') }}" src="{{ Storage::url('teacher-photos/'.Session::get('avatar')) }}">
+                                <img class="rounded-circle" alt="{{ Session::get('name') }}" src="{{ Storage::url('admin-photos/'.Session::get('avatar')) }}">
                                 @else
                                 <img class="rounded-circle" src="{{ URL::to('images/photo_defaults.jpg') }}" alt="{{ Session::get('name') }}">
                                 @endif

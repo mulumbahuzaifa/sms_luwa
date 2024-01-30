@@ -65,6 +65,17 @@
                                     </div>
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
+                                            <label>Amount (UGx)<span class="login-danger">*</span></label>
+                                            <input type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" placeholder="Enter Amount" value="{{ old('amount') }}">
+                                            @error('amount')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
                                             <label>Class Teacher <span class="login-danger">*</span></label>
                                             <select class="form-control @error('class_teacher_id') is-invalid @enderror" name="class_teacher_id">
                                                 <option value="" disabled>Select Class-Teacher</option>

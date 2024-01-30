@@ -33,4 +33,13 @@ class MarksRegisterModel extends Model
             ->orderBy('marks_register.id', 'desc')
             ->get();
     }
+    static public function getClass($exam_id, $student_id){
+        return MarksRegisterModel::select('sm_classes.name as class_name')
+            ->join('exams', 'exams.id', '=', 'marks_register.exam_id')
+            ->join('sm_classes', 'sm_classes.id', '=', 'marks_register.class_id')
+            ->join('subjects', 'subjects.id', '=', 'marks_register.subject_id')
+            ->where('marks_register.exam_id', '=', $exam_id)
+            ->where('marks_register.student_id', '=', $student_id)
+            ->first();
+    }
 }

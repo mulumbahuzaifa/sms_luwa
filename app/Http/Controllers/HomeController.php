@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignClassTeacher;
 use App\Models\Department;
+use App\Models\ExamModel;
 use App\Models\SmClass;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,22 +37,26 @@ class HomeController extends Controller
     /** home dashboard */
     public function index()
     {
-        $numberOfStudents = User::getStudents()->count();
-        $numberOfTeachers = User::getTeacher()->count();
-        $numberOfDepartments = Department::count();
-        $numberOfClasses = SmClass::count();
+        $data['numberOfStudents'] = User::getStudents()->count();
+        $data['numberOfTeachers'] = User::getTeacher()->count();
+        $data['numberOfParents'] = User::getParent()->count();
+        $data['numberOfDepartments'] = Department::count();
+        $data['numberOfClasses'] = SmClass::count();
+
+        // $data['TotalExam'] = ExamModel::getTotalExam();
+        // $data['TotalSubject'] = Subject::getTotalSubject();
 
         $users = User::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
                     ->whereYear('created_at', date('Y'))
                     ->groupBy(DB::raw("Month(created_at)"))
                     ->pluck('count', 'month_name');
 
-        $labels = $users->keys();
-        $data = $users->values();
+        $data['labels'] = $users->keys();
+        $data['data'] = $users->values();
 
         // dd($labels, $data);
 
-        return view('dashboard.home', compact('numberOfStudents', 'numberOfTeachers', 'numberOfDepartments', 'numberOfClasses', 'labels', 'data',));
+        return view('dashboard.home', $data);
     }
 
     /** profile user */
@@ -169,6 +176,15 @@ class HomeController extends Controller
     /** teacher dashboard */
     public function teacherDashboardIndex()
     {
+        $data['numberOfStudents'] = User::getStudents()->count();
+        $data['teacherStudents'] = User::getTeacherStudentCount(Auth::user()->id);
+        // $data['numberOfParents'] = User::getParent()->count();
+        // $data['numberOfDepartments'] = Department::count();
+        $data['numberOfClasses'] = SmClass::count();
+        $data['teacherClasses'] = AssignClassTeacher::getTeacherClassCount(Auth::User()->id);
+
+        // $data['TotalExam'] = ExamModel::getTotalExam();
+        $data['TotalSubject'] = AssignClassTeacher::getMyClassSubjectCount(Auth::User()->id);
         $data['teacher'] = User::getSingle(Auth::User()->id);
         return view('dashboard.teacher_dashboard', $data);
     }

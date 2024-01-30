@@ -56,9 +56,9 @@
                                         <label>Gender <span class="login-danger">*</span></label>
                                         <select class="form-control select  @error('gender') is-invalid @enderror" name="gender">
                                             <option selected disabled>Select Gender</option>
-                                            <option value="Female" {{ old('religion',$teacher->gender) == 'Female' ? "selected" :""}}>Female</option>
-                                            <option value="Male" {{ old('religion',$teacher->gender) == 'Male' ? "selected" :""}}>Male</option>
-                                            <option value="Others" {{ old('religion',$teacher->gender) == 'Others' ? "selected" :""}}>Others</option>
+                                            <option value="Female" {{ old('gender',$teacher->gender) == 'Female' ? "selected" :""}}>Female</option>
+                                            <option value="Male" {{ old('gender',$teacher->gender) == 'Male' ? "selected" :""}}>Male</option>
+                                            <option value="Others" {{ old('gender',$teacher->gender) == 'Others' ? "selected" :""}}>Others</option>
                                         </select>
                                         @error('gender')
                                             <span class="invalid-feedback" role="alert">
@@ -103,7 +103,13 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="form-group local-forms">
                                         <label>Marital Status <span class="login-danger">*</span></label>
-                                        <input type="text" class="form-control @error('marital_status') is-invalid @enderror" name="marital_status" placeholder="Marital Status" value="{{ old('marital_status', $teacher->marital_status) }}">
+                                        {{-- <input type="text" class="form-control @error('marital_status') is-invalid @enderror" name="marital_status" placeholder="Marital Status" value="{{ old('marital_status', $teacher->marital_status) }}"> --}}
+                                        <select class="form-control select  @error('marital_status') is-invalid @enderror" name="marital_status">
+                                            <option selected disabled>Select Status</option>
+                                            <option value="Married" {{ old('marital_status',$teacher->marital_status) == 'Married' ? "selected" :""}}>Married</option>
+                                            <option value="Single" {{ old('marital_status',$teacher->marital_status) == 'Single' ? "selected" :""}}>Single</option>
+                                            <option value="Others" {{ old('marital_status',$teacher->marital_status) == 'Others' ? "selected" :""}}>Others</option>
+                                        </select>
                                         @error('marital_status')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

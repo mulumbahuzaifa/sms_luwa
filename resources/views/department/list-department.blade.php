@@ -60,66 +60,67 @@
                                 </div>
                             </div>
                         </div>
-
-                        <table
-                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
-                            <thead class="student-thread">
-                                <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </th>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>HOD</th>
-                                    <th>Started Year</th>
-                                    <th>No of Students</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($departments as $department)
-                                <tr>
-                                    <td>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </td>
-                                    <td>{{ $department->code }}</td>
-                                    <td>
-                                        <h2>
-                                            <a>{{ $department->name }}</a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $department->category }}</td>
-                                    <td>{{ $department->HOD }}</td>
-                                    <td>{{ $department->date_created }}</td>
-                                    <td>180</td>
-                                    <td class="text-end">
-                                        <form action="{{ route('department/delete', $department->id) }}" method="POST">
-                                            <div class="actions">
-                                                <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
-                                                    <i class="feather-eye"></i>
-                                                </a>
-                                                <a href="{{ url('department/edit/'.$department->id) }}" class="btn btn-sm bg-danger-light">
-                                                    <i class="feather-edit"></i>
-                                                </a>
-                                                @csrf
-                                                {{-- @method('DELETE') --}}
-                                                <button  type="submit" class="btn btn-sm btn-danger" >
-                                                    <i class="feather-trash-2 me-1"></i>
-                                                </button>
+                        <div class="table-responsive">
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                <thead class="student-thread">
+                                    <tr>
+                                        <th>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
                                             </div>
-                                        </form>
+                                        </th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>HOD</th>
+                                        <th>Started Year</th>
+                                        <th>No of Students</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($departments as $department)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </td>
+                                        <td>{{ $department->code }}</td>
+                                        <td>
+                                            <h2>
+                                                <a>{{ $department->name }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $department->category }}</td>
+                                        <td>{{ $department->HOD }}</td>
+                                        <td>{{ $department->date_created }}</td>
+                                        <td>180</td>
+                                        <td class="text-end">
+                                            <form action="{{ route('department/delete', $department->id) }}" method="POST">
+                                                <div class="actions">
+                                                    <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="{{ url('department/edit/'.$department->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    {{-- @method('DELETE') --}}
+                                                    <button  type="submit" class="btn btn-sm btn-danger" >
+                                                        <i class="feather-trash-2 me-1"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
 
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{!! $departments->links()!!}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{!! $departments->links()!!}}
+                        </div>
                     </div>
                 </div>
             </div>

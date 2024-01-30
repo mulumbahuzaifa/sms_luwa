@@ -8,6 +8,7 @@ use App\Models\ExamModel;
 use App\Models\ExamScheduleModel;
 use App\Models\MarksGradeModel;
 use App\Models\MarksRegisterModel;
+use App\Models\SettingModel;
 use App\Models\SmClass;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -378,6 +379,7 @@ class ExaminationController extends Controller
         foreach ($getExam as $key => $value) {
             $dataE = array();
             $dataE['exam_name'] = $value->exam_name;
+            $dataE['exam_id'] = $value->exam_id;
             $getExamSubject = MarksRegisterModel::getExamSubjects($value->exam_id, Auth::user()->id);
 
             $dataSubject = array();
@@ -399,6 +401,33 @@ class ExaminationController extends Controller
         $data['getRecord'] = $result;
         $data['header_title'] = "My Exam Results";
         return view('student.my_exam_result', $data);
+    }
+    public function MyExamResultsPrint(Request $request){
+        $exam_id = $request->exam_id;
+        $student_id = $request->student_id;
+
+        $data['getExam'] = ExamModel::getSingle($exam_id);
+        $data['getStudent'] = User::getSingle($student_id);
+        $data['getSetting'] = SettingModel::getSingle();
+
+        $data['getClass'] = MarksRegisterModel::getClass($exam_id, $student_id);
+        $getExamSubject = MarksRegisterModel::getExamSubjects($exam_id, $student_id);
+
+        $dataSubject = array();
+        foreach($getExamSubject as $exam){
+            $total_score =  $exam['class_work'] + $exam['test'] + $exam['exam'];
+            $dataS = array();
+            $dataS['subject_name'] = $exam['subject_name'];
+            $dataS['class_work'] = $exam['class_work'];
+            $dataS['test'] = $exam['test'];
+            $dataS['exam'] = $exam['exam'];
+            $dataS['total_score'] = $total_score;
+            $dataS['full_marks'] = $exam['full_marks'];
+            $dataS['pass_mark'] = $exam['pass_mark'];
+            $dataSubject[] = $dataS;
+        }
+        $data['getExamMark'] = $dataSubject;
+        return view('exam_results_print', $data);
     }
 
     //Teacher Side

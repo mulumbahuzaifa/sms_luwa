@@ -60,72 +60,73 @@
                                 </div>
                             </div>
                         </div>
-
-                        <table
-                            class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
-                            <thead class="student-thread">
-                                <tr>
-                                    <th>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </th>
-                                    <th>Name</th>
-                                    <th>Code</th>
-                                    <th>Level</th>
-                                    <th>Compulsory</th>
-                                    <th>Department</th>
-                                    {{-- <th>Class</th> --}}
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($subjects as $subject)
-                                <tr>
-                                    <td>
-                                        <div class="form-check check-tables">
-                                            <input class="form-check-input" type="checkbox" value="something">
-                                        </div>
-                                    </td>
-                                    <td>{{ $subject->name }}</td>
-                                    <td>
-                                        <h2>
-                                            <a>{{ $subject->code }}</a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $subject->level }}</td>
-                                    <td>
-                                        @if($subject->compulsory == 0)
-                                        Active
-                                        @else
-                                        Inactive
-                                        @endif
-                                    </td>
-                                    <td>{{ $subject->department->name }}</td>
-                                    {{-- <td>{{ $subject->class->name }}</td> --}}
-                                    <td class="text-end">
-                                        <form action="{{ route('subject.delete', $subject->id) }}" method="POST">
-                                            <div class="actions">
-                                                <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
-                                                    <i class="feather-eye"></i>
-                                                </a>
-                                                <a href="{{ route('subject.edit', $subject->id) }}" class="btn btn-sm bg-danger-light">
-                                                    <i class="feather-edit"></i>
-                                                </a>
-                                                @csrf
-                                                {{-- @method('DELETE') --}}
-                                                <button  type="submit" class="btn btn-sm btn-danger" >
-                                                    <i class="feather-trash-2 me-1"></i>
-                                                </button>
+                        <div class="table-responsive">
+                            <table
+                                class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                <thead class="student-thread">
+                                    <tr>
+                                        <th>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
                                             </div>
-                                        </form>
+                                        </th>
+                                        <th>Name</th>
+                                        <th>Code</th>
+                                        <th>Level</th>
+                                        <th>Compulsory</th>
+                                        <th>Department</th>
+                                        {{-- <th>Class</th> --}}
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($subjects as $subject)
+                                    <tr>
+                                        <td>
+                                            <div class="form-check check-tables">
+                                                <input class="form-check-input" type="checkbox" value="something">
+                                            </div>
+                                        </td>
+                                        <td>{{ $subject->name }}</td>
+                                        <td>
+                                            <h2>
+                                                <a>{{ $subject->code }}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{ $subject->level }}</td>
+                                        <td>
+                                            @if($subject->compulsory == 0)
+                                            Active
+                                            @else
+                                            Inactive
+                                            @endif
+                                        </td>
+                                        <td>{{ $subject->department->name }}</td>
+                                        {{-- <td>{{ $subject->class->name }}</td> --}}
+                                        <td class="text-end">
+                                            <form action="{{ route('subject.delete', $subject->id) }}" method="POST">
+                                                <div class="actions">
+                                                    <a href="javascript:;" class="btn btn-sm bg-success-light me-2">
+                                                        <i class="feather-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('subject.edit', $subject->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <i class="feather-edit"></i>
+                                                    </a>
+                                                    @csrf
+                                                    {{-- @method('DELETE') --}}
+                                                    <button  type="submit" class="btn btn-sm btn-danger" >
+                                                        <i class="feather-trash-2 me-1"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
 
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        {{!! $subjects->links()!!}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{!! $subjects->links()!!}}
+                        </div>
                     </div>
                 </div>
             </div>

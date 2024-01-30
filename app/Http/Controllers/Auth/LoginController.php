@@ -68,9 +68,10 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
+
         DB::beginTransaction();
         try {
-
+            $remember = !empty($request->remember) ? true : false;
             $email     = $request->email;
             $password  = $request->password;
 
@@ -78,6 +79,7 @@ class LoginController extends Controller
                 /** get session */
                 $user = Auth::User();
                 Session::put('name', $user->name);
+                Session::put('last_name', $user->last_name);
                 Session::put('email', $user->email);
                 Session::put('user_id', $user->user_id);
                 Session::put('join_date', $user->join_date);
